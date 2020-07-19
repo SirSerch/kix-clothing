@@ -2,7 +2,7 @@ package com.ironhack.kix.image.service.controllers;
 
 import com.ironhack.kix.image.service.controllers.api.ImageApi;
 import com.ironhack.kix.image.service.models.dto.GalleryDTO;
-import com.ironhack.kix.image.service.services.ImageService;
+import com.ironhack.kix.image.service.models.dto.GalleryView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpEntity;
@@ -10,10 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class ImageController implements ImageApi {
+
     @Autowired
     ImageService imageService;
 
@@ -25,8 +25,8 @@ public class ImageController implements ImageApi {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/galleries/{productId}")
-    public List<String> getAllUriImagesWithProductId(@PathVariable(name = "productId") String productId) {
-        return imageService.getAllUriImagesWithProductId(productId);
+    public GalleryView getGalleryByProductId(@PathVariable(name = "productId") String productId) {
+        return imageService.getGalleryByProductId(productId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -43,7 +43,7 @@ public class ImageController implements ImageApi {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, value = "/gallery")
-    public List<String> addNewImageWithProductId(@RequestBody GalleryDTO gallery) {
-        return imageService.addNewImageWithProductId(gallery);
+    public GalleryView createNewGallery(@RequestBody GalleryDTO gallery) {
+        return imageService.createNewGallery(gallery);
     }
 }

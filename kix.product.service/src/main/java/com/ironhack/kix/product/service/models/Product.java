@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 @Document
@@ -15,16 +14,16 @@ public class Product {
     private String productName;
     private String productDescription;
     private BigDecimal productPrice;
-    private List<Long> productImages;
+    private Long productGallery;
     private Map<String, String> productTags;
 
     public Product() {
     }
-    public Product(ProductDTO productDTO, List<Long> productImages){
+    public Product(ProductDTO productDTO, Long productGallery){
         this.productName = productDTO.getProductName();
         this.productDescription = productDTO.getProductDescription();
         this.productPrice = productDTO.getProductPrice();
-        this.productImages = productImages;
+        this.productGallery = productGallery;
         this.productTags = productDTO.getProductTags();
     }
 
@@ -33,7 +32,7 @@ public class Product {
         this.productName = productDTO.getProductName();
         this.productDescription = productDTO.getProductDescription();
         this.productPrice = productDTO.getProductPrice();
-        this.productImages = productImages;
+        this.productGallery = productGallery;
         this.productTags = productDTO.getProductTags();
     }
 
@@ -69,12 +68,12 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public List<Long> getProductImages() {
-        return productImages;
+    public Long getProductGallery() {
+        return productGallery;
     }
 
-    public void setProductImages(List<Long> productImages) {
-        this.productImages = productImages;
+    public void setProductGallery(Long productGallery) {
+        this.productGallery = productGallery;
     }
 
     public Map<String, String> getProductTags() {

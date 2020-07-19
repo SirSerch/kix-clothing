@@ -1,11 +1,11 @@
 package com.ironhack.kix.image.service.services;
 
-import com.ironhack.kix.image.service.controllers.api.ImageApi;
 import com.ironhack.kix.image.service.exceptions.GalleryNotFoundException;
 import com.ironhack.kix.image.service.exceptions.ImageNotFoundException;
 import com.ironhack.kix.image.service.models.Image;
 import com.ironhack.kix.image.service.models.ImageGallery;
 import com.ironhack.kix.image.service.models.dto.GalleryDTO;
+import com.ironhack.kix.image.service.models.dto.GalleryView;
 import com.ironhack.kix.image.service.repositories.GalleryRepository;
 import com.ironhack.kix.image.service.repositories.ImageRepository;
 import net.coobird.thumbnailator.Thumbnails;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ImageService implements ImageApi {
+public class ImageService {
     private static Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 
     @Autowired
@@ -42,13 +42,13 @@ public class ImageService implements ImageApi {
     }
 
 
-    public List<String> addNewImageWithProductId(GalleryDTO base64ImageGallery) {
+    public GalleryView createNewGallery(GalleryDTO base64ImageGallery) {
         LOGGER.info(String.format("Creating new Gallery: %s", base64ImageGallery.getProductId()));
         ImageGallery gallery = new ImageGallery(base64ImageGallery.getProductId());
         List<Image> images = base64ImageGallery.getBase64Images().stream().map(Image::new).collect(Collectors.toList());
         images.forEach((image -> image.setGallery(gallery)));
         imageRepository.saveAll(images);
-        return galleryRepository.getAllImageIdWithProductId(base64ImageGallery.getProductId());
+        return new GalleryView(gallery.getProductId(), galleryRepository.getAllImageIdWithProductId(gallery.getProductId()));
     }
 
 
@@ -59,9 +59,9 @@ public class ImageService implements ImageApi {
     }
 
 
-    public List<String> getAllUriImagesWithProductId(String productId) {
+    public GalleryView getGalleryByProductId(String productId) {
         this.getImageGalleryByProductId(productId);
-        return galleryRepository.getAllImageIdWithProductId(productId);
+        return new GalleryView(productId, galleryRepository.getAllImageIdWithProductId(productId));
     }
 
 

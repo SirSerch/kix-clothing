@@ -1,30 +1,39 @@
 package com.ironhack.kix.product.service.services;
 
+import com.ironhack.kix.product.service.clients.ImageClient;
 import com.ironhack.kix.product.service.controllers.api.ProductApi;
 import com.ironhack.kix.product.service.exceptions.ProductNotFoundException;
 import com.ironhack.kix.product.service.models.Product;
+import com.ironhack.kix.product.service.models.dto.GalleryDTO;
 import com.ironhack.kix.product.service.models.dto.ProductDTO;
 import com.ironhack.kix.product.service.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class ProductService implements ProductApi {
-    @Autowired
-    ProductRepository productRepository;
+    @Autowired ProductRepository productRepository;
+    @Autowired ImageClient imageClient;
 
     @Override
-    public Product createProduct(ProductDTO product) {
-        // Create a service point to save ALL images and Return a list of IDs
-        List<Long> productImages = new LinkedList<>();
-        product.getProductImages().forEach((image) -> {
+    @Transactional
+    public Product createProduct(ProductDTO productDTO) {
+        Product product = productRepository.save(new Product());
+        GalleryDTO productGallery = new GalleryDTO();
+        productGallery.setProductId(product.getProductId());
+        productGallery.setBase64Images(productDTO.getProductImages());
+
+
+        Long productImages = new LinkedList<>();
+        productDTO.getProductImages().forEach((image) -> {
             isImageValid(image);
             //Do stuff with product service
         });
-        return productRepository.save(new Product(product, productImages));
+        return productRepository.save(new Product(productDTO, productImages));
     }
 
     @Override

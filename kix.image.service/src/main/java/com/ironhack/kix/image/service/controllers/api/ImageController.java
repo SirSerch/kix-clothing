@@ -1,10 +1,9 @@
-package com.ironhack.kix.image.service.controllers;
+package com.ironhack.kix.image.service.controllers.api;
 
-import com.ironhack.kix.image.service.controllers.api.ImageApi;
 import com.ironhack.kix.image.service.models.dto.GalleryDTO;
 import com.ironhack.kix.image.service.models.dto.GalleryView;
+import com.ironhack.kix.image.service.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

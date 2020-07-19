@@ -28,7 +28,7 @@ public class ProductService implements ProductApi {
         productGallery.setBase64Images(productDTO.getProductImages());
 
 
-        Long productImages = new LinkedList<>();
+        Long productImages = 0L;
         productDTO.getProductImages().forEach((image) -> {
             isImageValid(image);
             //Do stuff with product service

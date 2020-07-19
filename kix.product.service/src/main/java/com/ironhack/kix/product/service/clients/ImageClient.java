@@ -14,22 +14,22 @@ public interface ImageClient {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/images/{imageId}")
-    public HttpEntity<byte[]> getImageWithImageId(@PathVariable(name = "imageId") Long imageId, @RequestParam(value = "scale", required = false) Double scale) throws IOException;
+    HttpEntity<byte[]> getImageWithImageId(@PathVariable(name = "imageId") Long imageId, @RequestParam(value = "scale", required = false) Double scale) throws IOException;
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/galleries/{productId}")
-    public GalleryView getGalleryByProductId(@PathVariable(name = "productId") String productId);
+    GalleryView getGalleryById(@PathVariable(name = "productId") Long galleryId);
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.DELETE, value = "/galleries/{productId}")
-    public void deleteAllImagesByProductId(@PathVariable(name = "productId") String productId);
+    void deleteAllImagesByGalleryId(@PathVariable(name = "productId") Long galleryId);
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.DELETE, value = "/images/{imageId}")
-    public void deleteImageByImageId(@PathVariable(name = "imageId") Long imageId);
+    void deleteImageById(@PathVariable(name = "imageId") Long imageId);
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, value = "/gallery")
-    public GalleryView createNewGallery(@RequestBody GalleryDTO gallery);
+    GalleryView createNewGallery(@RequestBody GalleryDTO gallery);
 
 }

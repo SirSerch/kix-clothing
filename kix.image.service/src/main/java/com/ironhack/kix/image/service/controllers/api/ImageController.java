@@ -24,19 +24,19 @@ public class ImageController implements ImageApi {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/galleries/{productId}")
-    public GalleryView getGalleryByProductId(@PathVariable(name = "productId") String productId) {
-        return imageService.getGalleryByProductId(productId);
+    public GalleryView getGalleryById(@PathVariable(name = "productId") Long galleryId) {
+        return imageService.getGalleryByProductId(galleryId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.DELETE, value = "/galleries/{productId}")
-    public void deleteAllImagesByProductId(@PathVariable(name = "productId") String productId) {
-        imageService.deleteAllImagesByProductId(productId);
+    public void deleteAllImagesByGalleryId(@PathVariable(name = "productId") Long galleryId) {
+        imageService.deleteAllImagesByGalleryId(galleryId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.DELETE, value = "/images/{imageId}")
-    public void deleteImageByImageId(@PathVariable(name = "imageId") Long imageId) {
+    public void deleteImageById(@PathVariable(name = "imageId") Long imageId) {
         imageService.deleteImageByImageId(imageId);
     }
 

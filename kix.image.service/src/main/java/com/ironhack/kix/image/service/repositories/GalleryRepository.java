@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GalleryRepository extends JpaRepository<ImageGallery, String> {
-    @Query("SELECT CONCAT('/images/', im.imageId) FROM ImageGallery g LEFT JOIN g.gallery im WHERE g.productId = :productId")
-    List<String> getAllImageIdWithProductId(@Param(value = "productId") String productId);
+public interface GalleryRepository extends JpaRepository<ImageGallery, Long> {
+    @Query("SELECT CONCAT('/images/', im.imageId) FROM ImageGallery g LEFT JOIN g.gallery im WHERE g.galleryId = :galleryId")
+    List<String> getAllImageUriByGalleryId(@Param(value = "galleryId") Long galleryId);
 
 }

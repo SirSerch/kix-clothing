@@ -16,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -41,14 +42,14 @@ public class ImageService {
         header.setContentType(MediaType.IMAGE_JPEG);
     }
 
-
+    @Transactional
     public GalleryView createNewGallery(GalleryDTO base64ImageGallery) {
-        LOGGER.info(String.format("Creating new Gallery: %s", base64ImageGallery.getProductId()));
-        ImageGallery gallery = new ImageGallery(base64ImageGallery.getProductId());
+        LOGGER.info("Creating new Gallery");
+        ImageGallery gallery = new ImageGallery();
         List<Image> images = base64ImageGallery.getBase64Images().stream().map(Image::new).collect(Collectors.toList());
         images.forEach((image -> image.setGallery(gallery)));
         imageRepository.saveAll(images);
-        return new GalleryView(gallery.getProductId(), galleryRepository.getAllImageIdWithProductId(gallery.getProductId()));
+        return new GalleryView(gallery.getGalleryId(), galleryRepository.getAllImageUriByGalleryId(gallery.getGalleryId()));
     }
 
 
@@ -59,14 +60,14 @@ public class ImageService {
     }
 
 
-    public GalleryView getGalleryByProductId(String productId) {
-        this.getImageGalleryByProductId(productId);
-        return new GalleryView(productId, galleryRepository.getAllImageIdWithProductId(productId));
+    public GalleryView getGalleryByProductId(Long productId) {
+        this.getImageGalleryById(productId);
+        return new GalleryView(productId, galleryRepository.getAllImageUriByGalleryId(productId));
     }
 
 
-    public void deleteAllImagesByProductId(String productId) {
-        galleryRepository.deleteById(productId);
+    public void deleteAllImagesByGalleryId(Long galleryId) {
+        galleryRepository.deleteById(galleryId);
     }
 
 
@@ -79,7 +80,7 @@ public class ImageService {
         return imageRepository.findById(imageid).orElseThrow(ImageNotFoundException::new);
     }
 
-    private ImageGallery getImageGalleryByProductId(String productId) {
+    private ImageGallery getImageGalleryById(Long productId) {
         return galleryRepository.findById(productId).orElseThrow(GalleryNotFoundException::new);
     }
 

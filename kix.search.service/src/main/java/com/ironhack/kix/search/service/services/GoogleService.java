@@ -1,146 +1,228 @@
 package com.ironhack.kix.search.service.services;
 
-import com.google.cloud.vision.v1.Product;
-import com.google.cloud.vision.v1.ProductName;
-import com.google.cloud.vision.v1.ProductSearchClient;
-import com.google.cloud.vision.v1.ReferenceImage;
-import com.google.protobuf.FieldMask;
+
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.vision.v1.*;
+import com.google.protobuf.ByteString;
+import com.ironhack.kix.search.service.models.ImageSearchResult;
+import com.ironhack.kix.search.service.models.ProductView;
+import com.ironhack.kix.search.service.models.utils.Utils;
+import com.sun.jersey.core.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class GoogleService {
     static Logger LOGGER = LoggerFactory.getLogger(GoogleService.class);
 
-    @Value("PROJECT_ID")
+    @Value("${PROJECT_ID}")
     String projectId;
 
-    @Value("LOCATION_ID")
-    String computeRegion;
+    @Value("${LOCATION_ID}")
+    String locationId;
 
-    /**
-     * Create one product.
-     *
-     * @param productId          - Id of the product.
-     * @param productDisplayName - Display name of the product.
-     * @param productCategory    - Category of the product.
-     * @throws IOException - on I/O errors.
-     */
-    public com.ironhack.kix.search.service.models.Product createProduct(String productId, String productDisplayName, String productDescription, String productCategory) throws IOException {
+    @Value("${STORAGE_NAME}")
+    String storageName;
+
+    @Value("${PRODUCT_SET}")
+    String productSet;
+
+    @Value("${PRODUCT_CATEGORY}")
+    String productCategory;
+
+    public String uploadProductImageToProductStorage(byte[] productImage) {
+        LOGGER.info(String.format("Project ID: %s, Location ID: %s, Bucket ID: %s", this.projectId, this.locationId, this.storageName));
+        String imageName = Utils.bytesToHash256(productImage).concat(".jpg");
+        try {
+            LOGGER.info(String.format("Uploading file: %s", imageName));
+            Storage storage = StorageOptions.newBuilder().setProjectId(this.projectId).build().getService();
+            BlobId blobId = BlobId.of(this.storageName, imageName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+            storage.create(blobInfo, productImage);
+            LOGGER.info("Uploaded!");
+        } catch (Exception e) {
+            LOGGER.error(String.format("Error uploading file: %s, Error: %s", imageName, e.getMessage()));
+        }
+        return String.format("gs://%s/%s", storageName, imageName);
+    }
+
+    public void deleteProductImageFromProductStorage(String imageId){
+        String referenceImageId = imageId.replaceAll("gs://[a-z-]+/", "");
+        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
+        LOGGER.info("Deleting image: " + referenceImageId);
+        storage.delete(this.storageName, referenceImageId);
+        LOGGER.info("Deleted!");
+    }
+
+    public void createProductInProjectLocation(ProductView product) {
+        List<Product.KeyValue> list = new LinkedList<>();
+        product.getProductTags().forEach((k,v) -> {
+            list.add(Product.KeyValue.newBuilder().setKey(k).setValue(v).build());
+        });
+        String formattedParent = String.format("projects/%s/locations/%s", this.projectId, this.locationId);
+        LOGGER.info("Creating Cloud Vision Sesion: " + formattedParent);
         try (ProductSearchClient client = ProductSearchClient.create()) {
-
-            LOGGER.info("Project ID: " + projectId + ", Compute Region: " + computeRegion);
-
-            // A resource that represents Google Cloud Platform location.
-            String formattedParent = ProductSearchClient.formatLocationName(projectId, computeRegion);
-            // Create a product with the product specification in the region.
-            // Multiple labels are also supported.
-
-            LOGGER.info(String.format("Product: %s, %s, %s, %s", productId, productDisplayName, productDescription, productCategory));
-            Product myProduct = Product.newBuilder()
-                    .setName(productId)
-                    .setDescription(productDescription)
-                    .setDisplayName(productDisplayName)
-                    .setProductCategory(productCategory)
+            LOGGER.info("Cloud Vision Sesion Created!");
+            Product indexingProduct = Product.newBuilder()
+                    .setName(product.getProductId())
+                    .setDisplayName(product.getProductId())
+                    .setDescription(product.getProductName())
+                    .setProductCategory(this.productCategory)
+                    .addAllProductLabels(list)
                     .build();
-            Product product = client.createProduct(formattedParent, myProduct, productId);
-            // Display the product information
-            LOGGER.info(String.format("Product name: %s", product.getName()));
-            return new com.ironhack.kix.search.service.models.Product();
+            LOGGER.info(String.format("Creating indexingProduct: {productName=%s, displayName=%s, description=%s, labels={%s}}",
+                    indexingProduct.getName(),
+                    indexingProduct.getDisplayName(),
+                    indexingProduct.getDescription(),
+                    indexingProduct.getProductLabelsList().toString()));
+            Product indexedProduct = client.createProduct(formattedParent, indexingProduct, product.getProductId());
+            LOGGER.info(formattedParent);
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while trying to index product: %s, Error: %s", product.getProductId(), e.getMessage()));
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Add a product to a product set.
-     *
-     * @param productId    - Id of the product.
-     * @param productSetId - Id of the product set.
-     * @throws IOException - on I/O errors.
-     */
-    public void addProductToProductSet(String productId, String productSetId) throws IOException {
+    public void addProductToProductSet(String productId) {
+        String formattedName = String.format("projects/%s/locations/%s/productSets/%s", projectId, locationId, productSet);
+        LOGGER.info("Creating Cloud Vision Sesion: " + formattedName);
         try (ProductSearchClient client = ProductSearchClient.create()) {
-            LOGGER.info("Project ID: " + projectId + ", Compute Region: " + computeRegion);
-            LOGGER.info(String.format("Product ID: %s, Product Set ID: %s", productId, productSetId));
-            // Get the full path of the product set.
-            String formattedName = ProductSearchClient.formatProductSetName(projectId, computeRegion, productSetId);
-
-            // Get the full path of the product.
-            String productPath = ProductName.of(projectId, computeRegion, productId).toString();
-
-            // Add the product to the product set.
+            LOGGER.info("Cloud Vision Sesion Created!");
+            String productPath = ProductName.of(projectId, locationId, productId).toString();
+            LOGGER.info("Gettint productPath: " + productPath);
             client.addProductToProductSet(formattedName, productPath);
-
-            LOGGER.info(String.format("Product added to product set."));
+            LOGGER.info(String.format("Product: %s, Added correctly to: %s", productId, formattedName));
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while trying to add product: %s to product set: %s", productId, formattedName));
         }
     }
 
-    /**
-     * Update the product labels.
-     *
-     * @param productId -Id of the product.
-     * @param productLabels - Labels of the product.
-     * @throws IOException - on I/O errors.
-     */
-    public void updateProductLabels(String productId, String productDescription, String productLabels) throws IOException {
+    public void addReferenceImageToProduct(String productId, String imageURI, String referenceImageId) {
+        String formattedName = String.format("projects/%s/locations/%s/products/%s", this.projectId, this.locationId, productId);
         try (ProductSearchClient client = ProductSearchClient.create()) {
+            // Create a reference image.
+            ReferenceImage referenceImage = ReferenceImage.newBuilder().setUri(imageURI).build();
 
-            // Get the full path of the product.
-            String formattedName =
-                    ProductSearchClient.formatProductName(projectId, computeRegion, productId);
+            ReferenceImage image = client.createReferenceImage(formattedName, referenceImage, referenceImageId);
+            // Display the reference image information.
+            LOGGER.info("Reference image created!");
+            LOGGER.info(String.format("Reference image name: %s", image.getName()));
+            LOGGER.info(String.format("Reference image uri: %s", image.getUri()));
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while indexing reference photo: %s of product: %s on product set: %s", referenceImageId, productId, formattedName));
+        }
 
-            // Set product name, product labels and product display name.
-            // Multiple labels are also supported.
+    }
+
+    public void deleteProductFromProjectLocation(String productId) {
+        String formattedName = String.format("projects/%s/locations/%s/products/%s", this.projectId, this.locationId, productId);
+        LOGGER.info("Creating Cloud Vision Sesion: " + formattedName);
+        try (ProductSearchClient client = ProductSearchClient.create()) {
+            LOGGER.info("Cloud Vision Sesion Created!");
+            LOGGER.info("Deleting product: " + productId);
+            client.deleteProduct(formattedName);
+            LOGGER.info("Product Deleted!");
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while deleting a indexedProduct: %s, Error: %s", productId, e.getMessage()));
+        }
+    }
+
+    public List<ImageSearchResult> searchProductByImage(String base64Image, String filter){
+        List<ImageSearchResult> imageSearchResultList = new LinkedList<>();
+        String productSetLocation = String.format("projects/%s/locations/%s/productSets/%s", this.projectId, this.locationId, this.productSet);
+        LOGGER.info("Searching by Image in: " + productSetLocation);
+        try (ImageAnnotatorClient queryImageClient = ImageAnnotatorClient.create()) {
+            LOGGER.info("Decoding Image...");
+            byte[] rawImage = Base64.decode(base64Image);
+            Feature featuresElement = Feature.newBuilder().setType(Feature.Type.PRODUCT_SEARCH).build();
+            LOGGER.info("Converting Image...");
+            Image image = Image.newBuilder().setContent(ByteString.copyFrom(rawImage)).build();
+            LOGGER.info("Creating Image Context");
+            ImageContext imageContext =
+                    ImageContext.newBuilder()
+                            .setProductSearchParams(
+                                    ProductSearchParams.newBuilder()
+                                            .setProductSet(productSetLocation)
+                                            .addProductCategories(this.productCategory)
+                                            .setFilter(filter))
+                            .build();
+            LOGGER.info("Creating Request Context");
+            AnnotateImageRequest annotateImageRequest =
+                    AnnotateImageRequest.newBuilder()
+                            .addFeatures(featuresElement)
+                            .setImage(image)
+                            .setImageContext(imageContext)
+                            .build();
+            List<AnnotateImageRequest> requests = Arrays.asList(annotateImageRequest);
+
+            LOGGER.info("Searching...");
+            BatchAnnotateImagesResponse response = queryImageClient.batchAnnotateImages(requests);
+            List<ProductSearchResults.Result> similarProducts = response.getResponses(0).getProductSearchResults().getResultsList();
+            for (ProductSearchResults.Result product : similarProducts) {
+                ImageSearchResult result = new ImageSearchResult(product.getProduct().getDisplayName(), product.getScore());
+                product.getProduct().getProductLabelsList().forEach((keyValue -> {
+                    result.addTag(keyValue.getKey(), keyValue.getValue());
+                }));
+                imageSearchResultList.add(result);
+            }
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while trying to search products by Image, Error: %s", e.getMessage()));
+        }
+        return imageSearchResultList;
+    }
+
+    public List<String> getAllReferencesImagesByProductId(String productId){
+        String formattedParent = String.format("projects/%s/locations/%s/products/%s", this.projectId, this.locationId, productId);
+        try (ProductSearchClient client = ProductSearchClient.create()) {
+            return StreamSupport.stream(client.listReferenceImages(formattedParent).iterateAll().spliterator(), false)
+                    .map(ReferenceImage::getUri).collect(Collectors.toList());
+        }catch (IOException e){
+            LOGGER.error("Error while trying to obtain all references photos from: " + productId);
+        }
+        return new LinkedList<>();
+    }
+
+    public void deleteIndexedProduct(String productId){
+        this.getAllReferencesImagesByProductId(productId).forEach(this::deleteProductImageFromProductStorage);
+        this.deleteProductFromProjectLocation(productId);
+    }
+
+        /*
+    public void updateProduct(ProductView updatingProduct) {
+        List<Product.KeyValue> list = new LinkedList<>();
+        updatingProduct.getProductTags().forEach((k,v) -> {
+            list.add(Product.KeyValue.newBuilder().setKey(k).setValue(v).build());
+        });
+        String formattedName = String.format("projects/%s/locations/%s/products/%s", this.projectId, this.locationId, updatingProduct.getProductId());
+        LOGGER.info("Creating Cloud Vision Sesion: " + formattedName);
+        try (ProductSearchClient client = ProductSearchClient.create()) {
             Product product =
                     Product.newBuilder()
-                            .setName(formattedName)
-                            .setDescription(productDescription)
-                            .addProductLabels(
-                                    Product.KeyValue.newBuilder()
-                                            .setKey(productLabels.split(",")[0].split("=")[0])
-                                            .setValue(productLabels.split(",")[0].split("=")[1])
-                                            .build())
+                            .setName(updatingProduct.getProductId())
+                            .setDescription(updatingProduct.getProductName())
+                            .setDisplayName(updatingProduct.getProductId())
+                            .addAllProductLabels(list)
                             .build();
-
-            // Set product update field name.
-            FieldMask updateMask = FieldMask.newBuilder().addPaths("product_labels").build();
-
-            // Update the product.
+            FieldMask updateMask = FieldMask.newBuilder()
+                    .addPaths("product_labels,display_name,description")
+                    .build();
+            LOGGER.info("Updating product: " + updatingProduct.getProductId());
             Product updatedProduct = client.updateProduct(product, updateMask);
-            // Display the product information
-            LOGGER.info(String.format("Product name: %s", updatedProduct.getName()));
-            LOGGER.info(String.format("Updated product labels: "));
-            for (Product.KeyValue element : updatedProduct.getProductLabelsList()) {
-                LOGGER.info(String.format("%s: %s", element.getKey(), element.getValue()));
-            }
+        } catch (IOException e) {
+            LOGGER.error(String.format("Error while deleting a indexedProduct: %s, Error: %s", updatingProduct.getProductId(), e.getMessage()));
         }
     }
-
-    /**
-     * Create a reference image.
-     *
-     * @param productId - Id of the product.
-     * @param referenceImageId - Id of the image.
-     * @param gcsUri - Google Cloud Storage path of the input image.
-     * @throws IOException - on I/O errors.
-     */
-    public void createReferenceImage(String productId, String referenceImageId, String gcsUri) throws IOException {
-        try (ProductSearchClient client = ProductSearchClient.create()) {
-            LOGGER.info(String.format("Create Reference Image: %s, %s, %s", productId, referenceImageId, gcsUri));
-            // Get the full path of the product.
-            String formattedParent = ProductSearchClient.formatProductName(projectId, computeRegion, productId);
-            // Create a reference image.
-            ReferenceImage referenceImage = ReferenceImage.newBuilder().setUri(gcsUri).build();
-
-            ReferenceImage image =
-                    client.createReferenceImage(formattedParent, referenceImage, referenceImageId);
-            // Display the reference image information.
-            System.out.println(String.format("Reference image name: %s", image.getName()));
-            System.out.println(String.format("Reference image uri: %s", image.getUri()));
-        }
-    }
-
+*/
 }

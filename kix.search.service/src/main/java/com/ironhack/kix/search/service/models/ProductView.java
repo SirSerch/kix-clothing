@@ -1,43 +1,23 @@
-package com.ironhack.kix.product.service.models;
-
-import com.ironhack.kix.product.service.models.dto.ProductDTO;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.ironhack.kix.search.service.models;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.util.Map;
 
-@Document
-public class Product {
-    @Id
+public class ProductView {
     private String productId;
     private String productName;
     private String productDescription;
     private BigDecimal productPrice;
-    private Long productGallery;
     private Map<String, String> productTags;
+    private GalleryView productImages;
+    //Used by Search Engine
     private boolean isIndexed;
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdateTime;
     private LocalDateTime lastIndexedTime;
 
-    public Product() {
-    }
-    public Product(ProductDTO productDTO, Long productGallery){
-        this.productName = productDTO.getProductName();
-        this.productDescription = productDTO.getProductDescription();
-        this.productPrice = productDTO.getProductPrice();
-        this.productGallery = productGallery;
-        this.productTags = productDTO.getProductTags();
-
-        this.isIndexed = false;
-        this.createdTime = LocalDateTime.now();
-        this.lastIndexedTime = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
-        this.lastUpdateTime = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
+    public ProductView() {
     }
 
     public String getProductId() {
@@ -72,20 +52,20 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public Long getProductGallery() {
-        return productGallery;
-    }
-
-    public void setProductGallery(Long productGallery) {
-        this.productGallery = productGallery;
-    }
-
     public Map<String, String> getProductTags() {
         return productTags;
     }
 
     public void setProductTags(Map<String, String> productTags) {
         this.productTags = productTags;
+    }
+
+    public GalleryView getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(GalleryView productImages) {
+        this.productImages = productImages;
     }
 
     public boolean isIndexed() {
@@ -119,4 +99,5 @@ public class Product {
     public void setLastIndexedTime(LocalDateTime lastIndexedTime) {
         this.lastIndexedTime = lastIndexedTime;
     }
+
 }

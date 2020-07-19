@@ -6,28 +6,24 @@ import java.util.List;
 @Entity
 public class ImageGallery {
     @Id
-    private String productId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long galleryId;
     @OneToMany(mappedBy = "gallery", cascade = CascadeType.ALL)
     private List<Image> gallery;
 
-    public ImageGallery(String productId, List<Image> gallery) {
-        this.productId = productId;
+    public ImageGallery(List<Image> gallery) {
         this.gallery = gallery;
-    }
-
-    public ImageGallery(String productId) {
-        this.productId = productId;
     }
 
     public ImageGallery() {
     }
 
-    public String getProductId() {
-        return productId;
+    public Long getGalleryId() {
+        return galleryId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setGalleryId(Long galleryId) {
+        this.galleryId = galleryId;
     }
 
     public List<Image> getGallery() {

@@ -3,15 +3,15 @@ package com.ironhack.kix.image.service.models.dto;
 import java.util.List;
 
 public class GalleryView {
-    String productId;
+    Long galleryId;
     List<String> images;
 
-    public String getProductId() {
-        return productId;
+    public Long getGalleryId() {
+        return galleryId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setGalleryId(Long galleryId) {
+        this.galleryId = galleryId;
     }
 
     public List<String> getImages() {
@@ -22,8 +22,8 @@ public class GalleryView {
         this.images = images;
     }
 
-    public GalleryView(String productId, List<String> images) {
-        this.productId = productId;
+    public GalleryView(Long galleryId, List<String> images) {
+        this.galleryId = galleryId;
         this.images = images;
     }
 

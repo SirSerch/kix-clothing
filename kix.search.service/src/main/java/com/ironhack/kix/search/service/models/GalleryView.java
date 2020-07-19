@@ -1,8 +1,7 @@
-package com.ironhack.kix.product.service.models.dto;
-
-import com.ironhack.kix.product.service.models.Product;
+package com.ironhack.kix.search.service.models;
 
 import java.util.List;
+
 public class GalleryView {
     Long galleryId;
     List<String> images;
@@ -29,9 +28,5 @@ public class GalleryView {
     }
 
     public GalleryView() {
-    }
-
-    public GalleryView(Product product){
-        this.galleryId = product.getProductGallery();
     }
 }

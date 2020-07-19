@@ -5,12 +5,11 @@ import com.ironhack.kix.image.service.models.dto.GalleryView;
 import org.springframework.http.HttpEntity;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface ImageApi {
     GalleryView createNewGallery(GalleryDTO base64Gallery);
-    GalleryView getGalleryByProductId(String productId);
+    GalleryView getGalleryById(Long galleryId);
     HttpEntity<byte[]> getImageWithImageId(Long imageId, Double scale) throws IOException;
-    void deleteAllImagesByProductId(String productId);
-    void deleteImageByImageId(Long imageId);
+    void deleteAllImagesByGalleryId(Long galleryId);
+    void deleteImageById(Long imageId);
 }

@@ -1,34 +1,58 @@
 package com.ironhack.kix.users.service.models;
 
+import com.ironhack.kix.users.service.models.dto.UserDTO;
 import com.ironhack.kix.users.service.models.enums.Role;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    Role role;
-    String name;
-    String lastName;
-    String email;
-    String password;
+    private Long id;
+    private Role role;
+    private String name;
+    private String lastName;
+    private String password;
+    @Column(unique = true)
+    private String email;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
     @ElementCollection
-    List<Long> payments;
-    Integer cartId;
+    private List<Long> payments;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
 
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password, List<Long> payments, Integer cartId) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.payments = payments;
-        this.cartId = cartId;
+    public User(UserDTO userDTO){
+        this.role = Role.CLIENT;
+        this.name = userDTO.getName();
+        this.lastName = userDTO.getLastName();
+        this.email = userDTO.getEmail();
+        this.password = userDTO.getPassword();
+        this.address = userDTO.getAddress();
+        this.cart = userDTO.getCart();
+        this.payments = userDTO.getPayments();
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Long getId() {
@@ -79,11 +103,11 @@ public class User {
         this.payments = payments;
     }
 
-    public Integer getCartId() {
-        return cartId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

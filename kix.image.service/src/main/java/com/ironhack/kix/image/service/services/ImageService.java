@@ -12,6 +12,8 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -35,6 +37,8 @@ public class ImageService {
     @Autowired
     ImageRepository imageRepository;
 
+    @Autowired private DiscoveryClient discoveryClient;
+
     private static HttpHeaders header;
 
     public ImageService() {
@@ -49,7 +53,7 @@ public class ImageService {
         List<Image> images = base64ImageGallery.getBase64Images().stream().map(Image::new).collect(Collectors.toList());
         images.forEach((image -> image.setGallery(gallery)));
         imageRepository.saveAll(images);
-        return new GalleryView(gallery.getGalleryId(), galleryRepository.getAllImageUriByGalleryId(gallery.getGalleryId()));
+        return new GalleryView(gallery.getGalleryId(), this.getAllImageUriByGallery(gallery));
     }
 
 
@@ -62,7 +66,8 @@ public class ImageService {
 
     public GalleryView getGalleryByProductId(Long productId) {
         this.getImageGalleryById(productId);
-        return new GalleryView(productId, galleryRepository.getAllImageUriByGalleryId(productId));
+        ImageGallery gallery = this.getImageGalleryById(productId);
+        return new GalleryView(productId, this.getAllImageUriByGallery(gallery));
     }
 
 
@@ -91,4 +96,17 @@ public class ImageService {
         return outputStream.toByteArray();
     }
 
+    private String getImageServiceURL() {
+        List<ServiceInstance> list = discoveryClient.getInstances("kix-image-service");
+        if (list != null && list.size() > 0 ) {
+            if(list.get(0).getUri().toString() != null)
+                return list.get(0).getUri().toString();
+        }
+        return "";
+    }
+
+    private List<String> getAllImageUriByGallery(ImageGallery gallery){
+        return galleryRepository.getAllImageUriByGalleryId(gallery.getGalleryId())
+                .stream().map(image -> this.getImageServiceURL().concat(image)).collect(Collectors.toList());
+    }
 }

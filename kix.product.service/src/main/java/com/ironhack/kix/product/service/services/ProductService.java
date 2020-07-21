@@ -78,7 +78,7 @@ public class ProductService implements ProductApi {
         Product product = this.getProductByProductId(productId);
         GalleryView gallery = imageClient.getGalleryById(product.getProductGallery());
         searchClient.deleteIndexedProduct(productId);
-        product.setIndexed(true);
+        product.setIndexed(false);
         product.setLastIndexedTime(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
         return new ProductView(productRepository.save(product), gallery);
     }

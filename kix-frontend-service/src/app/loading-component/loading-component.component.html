@@ -1,0 +1,11 @@
+<div class="loading" *ngIf="isLoading || isErrorLoading" style="text-align: center;padding: 20px;">
+    <mat-progress-spinner mode="indeterminate" *ngIf="isLoading" style="margin: 0 auto;"></mat-progress-spinner>
+    <div *ngIf="isErrorLoading">
+        <mat-card-title>
+            The server is taking longer than usual to respond <mat-icon>sentiment_dissatisfied</mat-icon>
+        </mat-card-title>
+        <mat-card-subtitle>
+            Please try again later
+        </mat-card-subtitle>
+    </div>
+</div>

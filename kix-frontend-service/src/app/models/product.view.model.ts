@@ -3,16 +3,22 @@ export class ProductView {
     productName: string;
     productDescription: string;
     productPrice: number;
-    productTags: Map<string, string>;
+    productTags: ProductTags;
     productImages: Gallery;
 
-    isIndexed: boolean;
+    indexed: boolean;
     createdTime: Date;
     lastUpdateTime: Date;
     lastIndexedTime: Date;
+    isFavorite: boolean;
 }
 
 class Gallery {
     galleryId: number;
     images: string[];
+}
+
+class ProductTags {
+    category: string;
+    color: string;
 }

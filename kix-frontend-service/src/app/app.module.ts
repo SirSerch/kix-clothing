@@ -7,6 +7,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTableModule} from '@angular/material/table';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatBadgeModule} from '@angular/material/badge';
 //////////////////
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +30,11 @@ import { MainComponent } from './main/main.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { SearchComponent } from './search/search.component';
 import { ViewProductsComponent } from './view-products/view-products.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './header/header.component';
+import { ProductListComponent} from './product-list/product-list.component';
+import { IndexProductDialogComponent } from './index-product-dialog/index-product-dialog.component';
+import { LoadingComponentComponent } from './loading-component/loading-component.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +43,12 @@ import { ViewProductsComponent } from './view-products/view-products.component';
     MainComponent,
     ProductFormComponent,
     SearchComponent,
-    ViewProductsComponent
+    ViewProductsComponent,
+    DashboardComponent,
+    HeaderComponent,
+    ProductListComponent,
+    IndexProductDialogComponent,
+    LoadingComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +64,15 @@ import { ViewProductsComponent } from './view-products/view-products.component';
     MatIconModule,
     MatListModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatTreeModule,
+    MatBadgeModule
     ///////////////////////
   ],
   providers: [],

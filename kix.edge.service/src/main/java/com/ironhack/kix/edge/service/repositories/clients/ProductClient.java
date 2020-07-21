@@ -34,7 +34,7 @@ public interface ProductClient {
     @RequestMapping(method = RequestMethod.POST, value = "/products/{productId}/indexing")
     ProductView indexProduct(@PathVariable(name = "productId") String productId);
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, value = "/products/{productId}/indexing")
     ProductView deleteIndexProduct(@PathVariable(name = "productId") String productId);
 }

@@ -1,0 +1,24 @@
+<mat-icon *ngIf="this.product.indexed">search</mat-icon>
+<mat-icon *ngIf="! this.product.indexed">search_off</mat-icon>
+<h1 mat-dialog-title>
+    This product is {{product.indexed ? 'INDEXED' : 'NOT INDEXED'}}
+</h1>
+<div mat-dialog-content>
+    <p>Do you want to {{product.indexed ? 'Re-Index': 'Index'}} the product into the search engine?</p>
+    <div class="loading" *ngIf="indexing && !indexingError">
+        <h3 class="loading-title">{{deleting ? 'DELETING INDEX': 'INDEXING'}}</h3>
+        <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+    </div>
+    <div class="error loading" *ngIf="!indexing && indexingError">
+        <h3 class="loading-title">ERROR</h3>
+        <p>An Error was occured while trying to index the product. Please, try to index the product later</p>
+        <mat-progress-bar mode="determinate" value="100" color="accent"></mat-progress-bar>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Exit</button>
+    <button mat-button (click)="indexProduct(product)" cdkFocusInitial>Yes let's index</button>
+    <button mat-button color="accent" *ngIf="product.indexed" (click)="deleteIndexProduct(product)" cdkFocusInitial>No,
+        Delete Index</button>
+</div>

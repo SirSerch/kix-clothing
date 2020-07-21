@@ -11,7 +11,8 @@
         </div>
         <div class="card-actions">
             <button mat-mini-fab color="basic">
-                <mat-icon>favorite_border</mat-icon>
+                <mat-icon *ngIf="! product.isFavorite"  (click)="setFavorite(product)">favorite_border</mat-icon>
+                <mat-icon *ngIf="product.isFavorite" (click)="removeFavorite(product)">favorite</mat-icon>
             </button>
             <button mat-mini-fab color="basic">
                 <mat-icon>add_shopping_cart</mat-icon>
@@ -20,21 +21,3 @@
     </div>
 </div>
 </div>
-
-<!--<mat-card *ngFor="let product of products;">
-    <img mat-card-image src="{{product.productImages.images[1]}}" alt="">
-    <mat-card-content>
-        <mat-card-title>{{product.productName}}</mat-card-title>
-        <mat-card-subtitle>{{product.productPrice}} €</mat-card-subtitle>
-        <mat-card-actions>
-            <button mat-fab color="primary">
-                <mat-icon>add_shopping_cart</mat-icon>
-            </button>
-            <button mat-fab color="accent">
-                <mat-icon>favorite_border</mat-icon>
-            </button>
-        </mat-card-actions>
-    </mat-card-content>
-</mat-card>
-
--->

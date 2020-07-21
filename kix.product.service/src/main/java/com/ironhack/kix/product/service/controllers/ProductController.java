@@ -53,7 +53,7 @@ public class ProductController implements ProductApi {
         return productService.indexProduct(productId);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, value = "/products/{productId}/indexing")
     public ProductView deleteIndexProduct(@PathVariable(name = "productId") String productId) {
         return productService.deleteIndexProduct(productId);

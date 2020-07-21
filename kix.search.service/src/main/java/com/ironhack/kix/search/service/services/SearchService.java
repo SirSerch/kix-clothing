@@ -34,7 +34,7 @@ public class SearchService implements SearchApi {
             List<byte[]> productImages = new LinkedList<>();
             productView.getProductImages().getImages().forEach((imageId -> {
                 productImages.add(imageClient.getImageWithImageId(
-                        Long.valueOf(imageId.replaceAll("/images/", "")), null).getBody()
+                        Long.valueOf(imageId.replaceAll("http(|s):/.*/images/", "")), null).getBody()
                 );
             }));
             googleService.createProductInProjectLocation(productView);

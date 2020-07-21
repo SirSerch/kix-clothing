@@ -1,5 +1,8 @@
 package com.ironhack.kix.search.service.models;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;

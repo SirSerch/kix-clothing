@@ -2,16 +2,20 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class MainComponent implements OnInit {
+export class DashboardComponent implements OnInit {
+
+  mobileQuery: MediaQueryList;
+  shouldRun = true;
+  private _mobileQueryListener: () => void;
 
   fillerNav = [
     {
-      name: 'dashboard',
-      route: 'dashboard',
+      name: 'Products',
+      route: 'products',
       icon: 'store'
     },
     {
@@ -21,9 +25,6 @@ export class MainComponent implements OnInit {
     }
   ];
 
-  mobileQuery: MediaQueryList;
-  shouldRun = true;
-  private _mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,

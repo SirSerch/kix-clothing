@@ -1,0 +1,25 @@
+.spacer{
+    flex: 1 1 auto;
+}
+
+mat-toolbar{
+    background-color: #fff !important;
+}
+
+mat-toolbar-row > mat-icon{
+    margin-right: 12px;
+}
+
+.mat-column-indexed {
+    max-width: 100px;
+    padding: 0;
+}
+.mat-column-view {
+    max-width: 100px;
+    padding: 0;
+}
+
+.mat-column-image {
+    max-width: 100px;
+    padding: 0;
+}

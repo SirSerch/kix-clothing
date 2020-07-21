@@ -1,0 +1,19 @@
+<mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button color="link" (click)="navbar.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name" [routerLink]="([main])">KIX CLOTHING</h1>
+    <span class="spacer"></span>
+    <button mat-icon-button color="basic" *ngIf="router.url.match('/dashboard.*')" (click)="router.navigate([''])">
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <div class="navigate-buttons" *ngIf="router.url === '/'">
+        <button mat-icon-button color="basic">
+            <mat-icon>person</mat-icon>
+        </button>
+        <button mat-icon-button color="basic">
+            <mat-icon matBadge="{{favorites}}" matBadgeColor="warn" matBadgeSize="small" *ngIf="hasFavorite">favorite</mat-icon>
+            <mat-icon *ngIf="! hasFavorite">favorite</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

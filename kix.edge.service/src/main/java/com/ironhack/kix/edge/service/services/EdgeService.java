@@ -20,6 +20,11 @@ public class EdgeService implements EdgeApi {
     @Autowired UserService userService;
 
     @Override
+    public List<ProductView> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @Override
     public UserView createNewUser(UserDTO user) {
         return userService.createNewUser(user);
     }

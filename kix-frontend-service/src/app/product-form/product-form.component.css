@@ -1,0 +1,14 @@
+
+
+mat-list-item {
+    height: 100px !important;
+}
+
+mat-list {
+    max-width: 400px;
+}
+
+.mat-list-avatar {
+    border-radius: 0 !important;
+    height: initial !important;
+}

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class EdgeController implements EdgeApi {
 
@@ -53,6 +54,12 @@ public class EdgeController implements EdgeApi {
     @RequestMapping(method = RequestMethod.GET, value = "/products/{productId}")
     public ProductView getProductById(@PathVariable("productId") String productId) {
         return edgeService.getProductById(productId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/products")
+    public List<ProductView> getAllProducts() {
+        return edgeService.getAllProducts();
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

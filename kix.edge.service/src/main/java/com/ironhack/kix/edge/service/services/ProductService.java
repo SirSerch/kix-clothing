@@ -35,6 +35,10 @@ public class ProductService {
         return productClient.getProductById(productId);
     }
 
+    public List<ProductView> getAllProducts() {
+        return productClient.getAllProducts();
+    }
+
     protected void deleteProductById(String productId) {
         productClient.deleteProduct(productId);
     }

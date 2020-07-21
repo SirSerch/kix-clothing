@@ -17,6 +17,7 @@ public interface EdgeApi {
 
     ProductView createNewProduct(ProductDTO product);
     ProductView getProductById(String productId);
+    List<ProductView> getAllProducts();
     void deleteProductById(String productId);
 
     List<SearchView> searchProduct(SearchPetitionDTO petition);

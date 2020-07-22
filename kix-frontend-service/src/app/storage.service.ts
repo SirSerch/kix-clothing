@@ -49,7 +49,7 @@ export class StorageService {
 
   obtainFavorites(): ProductView[] {
     if (localStorage.getItem('favorites') !== 'undefined') {
-      let favorite: ProductView[] = JSON.parse(localStorage.getItem('favorites'));
+      const favorite: ProductView[] = JSON.parse(localStorage.getItem('favorites'));
       if (favorite === null) {
         return [];
       } else {
@@ -57,6 +57,14 @@ export class StorageService {
       }
     }
     return [];
+  }
+
+  setProducts(products: ProductView[]): ProductView[]{
+    const favorites: ProductView[] = this.obtainFavorites();
+    favorites.forEach(favorite => {
+      products.find(product => product.productId === favorite.productId).isFavorite = true;
+    });
+    return products;
   }
 
   private deleteFromArray(key: string, array: ProductView[]): ProductView[] {

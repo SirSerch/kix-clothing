@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,13 +64,14 @@ public class ProductService implements ProductApi {
         return product;
     }
 
-    //PENDIENTE
     @Override
     public void updateProduct(ProductDTO updateProduct, String productId) {
-        updateProduct.setProductId(this.getProductById(productId).getProductId());
-        //Do some stuff with photos
-        Product product = new Product();
-        productRepository.save(product);
+        Product product = this.getProductByProductId(productId);
+        imageClient.deleteAllImagesByGalleryId(product.getProductGallery());
+        GalleryView gallery = imageClient.createNewGallery(new GalleryDTO(updateProduct.getProductImages()));
+        updateProduct.setProductId(productId);
+        Product newProduct = new Product(updateProduct, gallery.getGalleryId());
+        productRepository.save(newProduct);
     }
 
     @Override
@@ -101,8 +104,14 @@ public class ProductService implements ProductApi {
     }
 
     public List<ProductView> searchProduct(SearchDTO searchDTO){
-        if(searchDTO.isImageSearch()){
-            List<ImageSearchResult> result = searchService.searchByImage(searchDTO.getSearch(), searchDTO.getFilter());
+        Map<String, String> filter;
+        if(searchDTO.getFilter() != null){
+            filter = searchDTO.getFilter();
+        } else {
+            filter = new HashMap<>();
+        }
+        if(searchDTO.getImageSearch()){
+            List<ImageSearchResult> result = searchService.searchByImage(searchDTO.getSearch(), filter);
             return result.stream().map(this::getProductById).collect(Collectors.toList());
         }
         return null;

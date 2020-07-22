@@ -3,7 +3,9 @@
         <mat-icon>store</mat-icon><span>Products</span>
     </mat-toolbar-row>
     <mat-toolbar-row>
-        <button mat-flat-button color="accent">New Product <mat-icon>add</mat-icon></button>
+        <button mat-flat-button color="accent" [routerLink]="'new'">
+            New Product <mat-icon>add</mat-icon>
+        </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -34,22 +36,21 @@
         <mat-cell *matCellDef="let product"><img height="40px"
                 src="{{product.productImages.images[0].concat('?scale=0.05')}}"></mat-cell>
     </ng-container>
-    <ng-container matColumnDef="indexed">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Indexed</mat-header-cell>
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
         <mat-cell *matCellDef="let product; let tableIndex = index">
-            <button mat-icon-button *ngIf="! product.indexed">
+            <button mat-icon-button *ngIf="! product.indexed" matTooltip="Product NOT Indexed">
                 <mat-icon (click)="indexProduct(product, tableIndex)">search_off</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="product.indexed">
+            <button mat-icon-button *ngIf="product.indexed" matTooltip="Product Indexed">
                 <mat-icon (click)="indexProduct(product, tableIndex)">search</mat-icon>
             </button>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="view">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>View</mat-header-cell>
-        <mat-cell *matCellDef="let product">
-            <button mat-icon-button><mat-icon>visibility</mat-icon></button>
+            <button mat-icon-button matTooltip="View Product" [routerLink]="[product.productId]">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete Product">
+                <mat-icon>delete</mat-icon>
+            </button>
         </mat-cell>
     </ng-container>
 

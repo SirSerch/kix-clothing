@@ -69,7 +69,13 @@ public class EdgeController implements EdgeApi {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(method = RequestMethod.POST, value = "/products/{productId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/products/{productId}")
+    public void updateProduct(@RequestBody ProductDTO productDTO, @PathVariable("productId") String productId) {
+        edgeService.updateProduct(productDTO, productId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, value = "/products/search")
     public List<ProductView> searchProduct(@RequestBody SearchDTO petition) {
         return edgeService.searchProduct(petition);
     }

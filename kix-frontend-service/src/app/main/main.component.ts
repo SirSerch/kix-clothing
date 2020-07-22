@@ -10,15 +10,33 @@ export class MainComponent implements OnInit {
 
   fillerNav = [
     {
-      name: 'dashboard',
-      route: 'dashboard',
-      icon: 'store'
+      name: 'Blouses & Shirts',
+      route: '',
     },
     {
-      name: 'Users',
-      route: 'users',
-      icon: 'supervisor_account'
-    }
+      name: 'Dresses',
+      route: '',
+    },
+    {
+      name: 'Jeans',
+      route: '',
+    },
+    {
+      name: 'Shorts',
+      route: '',
+    },
+    {
+      name: 'Skirts',
+      route: '',
+    },
+    {
+      name: 'Swimsuits & Bikinis',
+      route: '',
+    },
+    {
+      name: 'Tops & Bodysuits',
+      route: '',
+    },
   ];
 
   mobileQuery: MediaQueryList;

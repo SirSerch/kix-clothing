@@ -3,16 +3,16 @@ package com.ironhack.kix.edge.service.models.dto;
 import java.util.Map;
 
 public class SearchDTO {
-    private boolean isImageSearch;
+    private boolean imageSearch;
     private Map<String, String> filter;
     private String search;
 
     public boolean isImageSearch() {
-        return isImageSearch;
+        return imageSearch;
     }
 
     public void setImageSearch(boolean imageSearch) {
-        isImageSearch = imageSearch;
+        this.imageSearch = imageSearch;
     }
 
     public Map<String, String> getFilter() {
@@ -29,5 +29,14 @@ public class SearchDTO {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchDTO{" +
+                "isImageSearch=" + imageSearch +
+                ", filter=" + filter +
+                ", search='" + search.substring(0, 30) + '\'' +
+                '}';
     }
 }

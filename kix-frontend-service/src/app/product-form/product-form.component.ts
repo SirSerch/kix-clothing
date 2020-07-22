@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../models';
+import { Product, ProductView } from '../models';
 import { EdgeURL } from '../utils';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -10,7 +14,13 @@ import { EdgeURL } from '../utils';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-  product: FormGroup;
+
+  _product: FormGroup;
+
+  @Output()
+  product = new EventEmitter<Product>();
+
+  @Input() updateProduct: Observable<ProductView>;
 
   categories = [
     {
@@ -39,7 +49,7 @@ export class ProductFormComponent implements OnInit {
     },
     {
       category: 'Swimsuits & Bikinis',
-      value: 'bikinis'
+      value: 'swimsuits'
     }
   ];
 
@@ -90,36 +100,62 @@ export class ProductFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
-    this.product = this.fb.group({
+    this.categories.sort((a, b) => {
+      if(a.value > b.value) return 1;
+      if(a.value < b.value) return -1;
+      return 0;
+    });
+    this._product = this.fb.group({
       productName: ['', [Validators.required]],
       productDescription: ['', [Validators.required]],
       productPrice: ['', [Validators.required]],
       productCategory: ['', [Validators.required]],
       productColor: ['', [Validators.required]],
     });
-  }
 
-  createProduct(): void {
-    const images: string[] = [];
-    this.images.forEach(image => images.push(image.image));
-    const product: Product = new Product(this.product.value, images);
-    this.http.post(EdgeURL.concat('/product'), product).subscribe( result => {
-      console.log(result);
-    },
-    error => {
-      console.log(error);
+    if(this.updateProduct){
+    this.updateProduct.subscribe(product => {
+      console.log(product);
+      this._product.setValue({
+        productName: product.productName,
+        productDescription: product.productDescription,
+        productPrice: product.productPrice,
+        productCategory: '',
+        productColor: ''
+      });
+      product.productImages.images.forEach(element => {
+        const img: HTMLImageElement = document.createElement('img');
+        img.src = element;
+        img.setAttribute('crossOrigin', 'anonymous');
+        img.onload = () => {
+          const image: Image = new Image();
+          image.image = this.getBase64FromImageUrl(img);
+          this.images.push(image);
+        };
+      });
     });
   }
+  }
 
-  deleteImage(index: number): void{
+  orderImage(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+  }
+
+  sendProduct(): void {
+    const images: string[] = [];
+    this.images.forEach(image => images.push(image.image));
+    const product: Product = new Product(this._product.value, images);
+    this.product.emit(product);
+  }
+
+  deleteImage(index: number): void {
     this.images.splice(index, 1);
   }
 
-  addImage(image: Image): void{
+  addImage(image: Image): void {
     this.images.push(image);
   }
 
@@ -128,7 +164,7 @@ export class ProductFormComponent implements OnInit {
     document.getElementById('insert-image').onchange = (e) => this.readFile();
   }
 
-  readImage(file: File): void{
+  readImage(file: File): void {
     const reader = new FileReader();
     const image: Image = new Image();
     reader.addEventListener('load', () => {
@@ -137,7 +173,7 @@ export class ProductFormComponent implements OnInit {
       image.size = file.size;
       this.addImage(image);
     }
-      );
+    );
     reader.readAsDataURL(file);
   }
 
@@ -147,14 +183,30 @@ export class ProductFormComponent implements OnInit {
       [].forEach.call(files, this.readImage.bind(this));
     }
   }
+
+  getBase64FromImageUrl(img: HTMLImageElement): string {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const dataURL = canvas.toDataURL('image/jpg');
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+  }
+
 }
 
-class Image{
+
+class Image {
   name: string;
   image: string;
   size: number;
 
-  static getImageData(base64: string): string{
-      return base64.replace('data:image/jpeg;base64,', '');
+  constructor(image?: string) {
+    this.image = image;
+  }
+
+  static getImageData(base64: string): string {
+    return base64.replace('data:image/jpeg;base64,', '');
   }
 }

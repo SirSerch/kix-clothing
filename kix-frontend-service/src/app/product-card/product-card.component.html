@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-img-container">
+        <img class="card-img" src="{{product.productImages.images[1].concat('?scale=0.2')}}">
+        <img class="card-img-hover" src="{{product.productImages.images[0].concat('?scale=0.2')}}">
+    </div>
+    <div class="card-content">
+        <div class="card-grouped-title">
+            <h1 class="card-title">{{product.productName}}</h1>
+            <h3 class="card-subtitle">{{product.productPrice}} €</h3>
+        </div>
+        <div class="card-actions">
+            <button mat-mini-fab color="basic">
+                <mat-icon  *ngIf="! product.isFavorite"  (click)="setFavorite('ADD')">favorite_border</mat-icon>
+                <mat-icon color="accent" *ngIf="product.isFavorite" (click)="setFavorite('REMOVE')">favorite</mat-icon>
+            </button>
+            <button *ngIf="false"mat-mini-fab color="basic">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

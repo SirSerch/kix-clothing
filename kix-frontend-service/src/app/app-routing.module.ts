@@ -8,6 +8,9 @@ import { MainComponent } from './main/main.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ErrorNotfoundComponent } from './error-notfound/error-notfound.component';
+import { SearchViewComponent } from './search-view/search-view.component';
+import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductViewComponent } from './product-view/product-view.component';
 
 
 const routes: Routes = [
@@ -20,8 +23,8 @@ const routes: Routes = [
         component: ViewProductsComponent
       },
       {
-        path: '**',
-        component: ErrorNotfoundComponent
+        path: 'products/search',
+        component: SearchViewComponent
       }
     ]
   },
@@ -31,15 +34,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ProductListComponent
+        redirectTo: 'products',
+        pathMatch: 'full'
       },
       {
         path: 'products',
-        component: ProductListComponent
+        component: ProductListComponent,
       },
       {
-        path: 'products/create',
-        component: ProductFormComponent
+        path: 'products/new',
+        component: ProductCreateComponent
+      },
+      {
+        path: 'products/:product',
+        component: ProductViewComponent
       },
       {
         path: 'users',
@@ -47,6 +55,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: '**',
+    component: ErrorNotfoundComponent
+  }
 ];
 
 @NgModule({

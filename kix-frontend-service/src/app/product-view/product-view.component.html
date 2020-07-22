@@ -1,0 +1,4 @@
+<mat-toolbar>
+    <mat-toolbar-row><mat-icon>store</mat-icon><h1>View product</h1></mat-toolbar-row>
+</mat-toolbar>
+<app-product-form [updateProduct]="product.asObservable()"(product)="updateProduct($event)"></app-product-form>

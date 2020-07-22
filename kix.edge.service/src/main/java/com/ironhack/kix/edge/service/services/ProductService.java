@@ -46,6 +46,10 @@ public class ProductService {
         productClient.deleteProduct(productId);
     }
 
+    protected void updateProduct(ProductDTO productDTO, String productId){
+        productClient.updateProduct(productDTO, productId);
+    }
+
     protected ProductView indexProductOnSearchEngine(String productId) {
         return productClient.indexProduct(productId);
     }

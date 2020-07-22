@@ -11,6 +11,7 @@ export class ProductView {
     lastUpdateTime: Date;
     lastIndexedTime: Date;
     isFavorite: boolean;
+    score: number;
 }
 
 class Gallery {

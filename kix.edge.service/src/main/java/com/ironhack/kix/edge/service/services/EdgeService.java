@@ -7,6 +7,8 @@ import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
 import com.ironhack.kix.edge.service.models.views.SearchView;
 import com.ironhack.kix.edge.service.models.views.UserView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Service
 public class EdgeService implements EdgeApi {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(EdgeService.class);
+
     @Autowired ProductService productService;
     @Autowired UserService userService;
 
@@ -57,12 +62,21 @@ public class EdgeService implements EdgeApi {
         productService.deleteProductById(productId);
     }
 
+
+    @Override
+    public void updateProduct(ProductDTO productDTO, String productId) {
+        productService.updateProduct(productDTO, productId);
+    }
+
     @Override
     public List<ProductView> searchProduct(SearchDTO petition) {
+        LOGGER.info(petition.toString());
         if(petition.isImageSearch())
             return productService.searchProductsByImage(petition);
         return null;
     }
+
+
 
     @Override
     public ProductView indexProductOnSearchEngine(String productId) {

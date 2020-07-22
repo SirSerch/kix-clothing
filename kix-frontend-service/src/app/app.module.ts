@@ -17,6 +17,9 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 //////////////////
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -39,6 +42,10 @@ import { IndexProductDialogComponent } from './index-product-dialog/index-produc
 import { LoadingComponentComponent } from './loading-component/loading-component.component';
 import { ViewWishListComponent } from './view-wish-list/view-wish-list.component';
 import { ErrorNotfoundComponent } from './error-notfound/error-notfound.component';
+import { SearchViewComponent } from './search-view/search-view.component';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductViewComponent } from './product-view/product-view.component';
+import { ProductCreateComponent } from './product-create/product-create.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +61,11 @@ import { ErrorNotfoundComponent } from './error-notfound/error-notfound.componen
     IndexProductDialogComponent,
     LoadingComponentComponent,
     ViewWishListComponent,
-    ErrorNotfoundComponent
+    ErrorNotfoundComponent,
+    SearchViewComponent,
+    ProductCardComponent,
+    ProductViewComponent,
+    ProductCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +91,10 @@ import { ErrorNotfoundComponent } from './error-notfound/error-notfound.componen
     MatTreeModule,
     MatBadgeModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule,
+    DragDropModule,
+    MatSnackBarModule
     ///////////////////////
   ],
   providers: [],

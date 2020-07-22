@@ -18,6 +18,7 @@ public interface EdgeApi {
     ProductView getProductById(String productId);
     List<ProductView> getAllProducts();
     void deleteProductById(String productId);
+    void updateProduct(ProductDTO productDTO, String productId);
 
     List<ProductView> searchProduct(SearchDTO petition);
     ProductView indexProductOnSearchEngine(String productId);

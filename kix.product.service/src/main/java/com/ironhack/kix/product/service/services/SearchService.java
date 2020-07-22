@@ -20,9 +20,9 @@ public class SearchService {
 
     final static Logger LOGGER = LoggerFactory.getLogger(SearchService.class);
 
-    List<ImageSearchResult> searchByImage(String imageBase64, Map<String, String> filter){
+    List<ImageSearchResult> searchByImage(String imageBase64, Map<String, String> mapFilter){
         LOGGER.info("Search by Image: " + imageBase64.substring(0, 30).concat("..."));
-        LOGGER.info(filter.toString().replaceAll("[{}]", ""));
-        return searchClient.searchProductsByImage(imageBase64, filter.toString().replaceAll("[{}]", ""));
+        LOGGER.info(mapFilter.toString().replaceAll("[{}]", ""));
+        return searchClient.searchProductsByImage(imageBase64, mapFilter.toString().replaceAll("[{}]",""));
     }
 }

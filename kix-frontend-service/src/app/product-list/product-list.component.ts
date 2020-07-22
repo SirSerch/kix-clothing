@@ -14,7 +14,7 @@ import { IndexProductDialogComponent } from '../index-product-dialog/index-produ
 })
 export class ProductListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'price', 'image', 'indexed', 'view'];
+  displayedColumns: string[] = ['id', 'name', 'price', 'image', 'actions'];
 
   productList: ProductView[] = [];
 

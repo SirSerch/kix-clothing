@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe( searchResult => {
       if (searchResult !== undefined) {
         console.log(searchResult);
+        this.router.navigateByUrl('/products/search', {state: searchResult});
       }
     });
   }

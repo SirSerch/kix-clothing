@@ -3,16 +3,16 @@ package com.ironhack.kix.product.service.models.dto;
 import java.util.Map;
 
 public class SearchDTO {
-    private boolean isImageSearch;
+    private boolean imageSearch;
     private Map<String, String> filter;
     private String search;
 
-    public boolean isImageSearch() {
-        return isImageSearch;
+    public boolean getImageSearch() {
+        return imageSearch;
     }
 
     public void setImageSearch(boolean imageSearch) {
-        isImageSearch = imageSearch;
+        this.imageSearch = imageSearch;
     }
 
     public Map<String, String> getFilter() {

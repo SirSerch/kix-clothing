@@ -16,11 +16,20 @@ public class ProductView {
         private LocalDateTime createdTime;
         private LocalDateTime lastUpdateTime;
         private LocalDateTime lastIndexedTime;
+        private Float score;
 
         public ProductView() {
         }
 
-        public String getProductId() {
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    public String getProductId() {
             return productId;
         }
 

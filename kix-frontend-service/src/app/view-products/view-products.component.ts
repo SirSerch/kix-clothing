@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { ProductView } from '../models';
+import { ProductView, Favorite, FavoriteAction, Product } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { EdgeURL } from '../utils';
 import { StorageService } from '../storage.service';
@@ -25,23 +25,20 @@ export class ViewProductsComponent implements OnInit {
     });
   }
 
-  getAllProducts() {
-    const favorites: ProductView[] = this.storage.obtainFavorites();
+  getAllProducts(): void {
     this.http.get<ProductView[]>(EdgeURL.concat('/products')).subscribe(products => {
-      favorites.forEach(favorite => {
-        products.find(product => product.productId === favorite.productId).isFavorite = true;
-      });
-      this.products = products;
+      this.products = this.storage.setProducts(products);
     },
       error => console.log(error));
   }
 
-  setFavorite(product: ProductView) {
-    this.storage.setFavorite(product);
-  }
-
-  removeFavorite(product: ProductView) {
-    this.storage.removeFavorite(product);
+  favorite(favorite: Favorite): void{
+    if (favorite.action === FavoriteAction.ADD){
+      this.storage.setFavorite(favorite.product);
+    }
+    if (favorite.action === FavoriteAction.REMOVE){
+      this.storage.removeFavorite(favorite.product);
+    }
   }
 
 }

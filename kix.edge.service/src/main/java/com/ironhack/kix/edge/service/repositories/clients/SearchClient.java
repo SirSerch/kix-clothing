@@ -1,6 +1,5 @@
 package com.ironhack.kix.edge.service.repositories.clients;
 
-import com.ironhack.kix.edge.service.models.dto.SearchPetitionDTO;
 import com.ironhack.kix.edge.service.models.views.ImageSearchResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;

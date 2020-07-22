@@ -7,6 +7,7 @@ import { ProductView } from './models';
 import { MainComponent } from './main/main.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { ErrorNotfoundComponent } from './error-notfound/error-notfound.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: '',
         component: ViewProductsComponent
+      },
+      {
+        path: '**',
+        component: ErrorNotfoundComponent
       }
     ]
   },
@@ -41,7 +46,7 @@ const routes: Routes = [
         component: UserFormComponent
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

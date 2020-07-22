@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService implements ProductApi {
@@ -26,6 +27,7 @@ public class ProductService implements ProductApi {
     @Autowired ProductRepository productRepository;
     @Autowired ImageClient imageClient;
     @Autowired SearchClient searchClient;
+    @Autowired SearchService searchService;
 
     @Override
     @Transactional
@@ -52,6 +54,12 @@ public class ProductService implements ProductApi {
         Product product = this.getProductByProductId(productId);
         GalleryView galleryView = imageClient.getGalleryById(product.getProductGallery());
         return new ProductView(product, galleryView);
+    }
+
+    public ProductView getProductById(ImageSearchResult result){
+        ProductView product = this.getProductById(result.getProductId());
+        product.setScore(result.getScore());
+        return product;
     }
 
     //PENDIENTE
@@ -90,6 +98,14 @@ public class ProductService implements ProductApi {
         searchClient.deleteIndexedProduct(productId);
         imageClient.deleteAllImagesByGalleryId(product.getProductGallery());
         productRepository.deleteById(this.getProductById(productId).getProductId());
+    }
+
+    public List<ProductView> searchProduct(SearchDTO searchDTO){
+        if(searchDTO.isImageSearch()){
+            List<ImageSearchResult> result = searchService.searchByImage(searchDTO.getSearch(), searchDTO.getFilter());
+            return result.stream().map(this::getProductById).collect(Collectors.toList());
+        }
+        return null;
     }
 
     private Product getProductByProductId(String productId) {

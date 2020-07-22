@@ -2,8 +2,10 @@ package com.ironhack.kix.product.service.controllers;
 
 import com.ironhack.kix.product.service.controllers.api.ProductApi;
 import com.ironhack.kix.product.service.models.Product;
+import com.ironhack.kix.product.service.models.dto.ImageSearchResult;
 import com.ironhack.kix.product.service.models.dto.ProductDTO;
 import com.ironhack.kix.product.service.models.dto.ProductView;
+import com.ironhack.kix.product.service.models.dto.SearchDTO;
 import com.ironhack.kix.product.service.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,5 +59,11 @@ public class ProductController implements ProductApi {
     @RequestMapping(method = RequestMethod.DELETE, value = "/products/{productId}/indexing")
     public ProductView deleteIndexProduct(@PathVariable(name = "productId") String productId) {
         return productService.deleteIndexProduct(productId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, value = "/products/search")
+    List<ProductView> searchProductsByImage(@RequestBody SearchDTO searchDTO){
+        return productService.searchProduct(searchDTO);
     }
 }

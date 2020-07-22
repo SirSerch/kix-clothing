@@ -1,0 +1,18 @@
+.tab-icon {
+    margin-right: 8px;
+}
+
+.basic-search {
+    margin: 20px 0;
+    width: 100%;
+    font-size: 30px;
+}
+
+mat-card {
+    margin: 20px 0;
+    padding: 20px;
+    text-align: center;
+    border: 2px dashed #ccc;
+    box-shadow: none !important;
+    border-radius: 20px;
+}

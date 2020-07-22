@@ -2,7 +2,7 @@ package com.ironhack.kix.edge.service.controllers;
 
 import com.ironhack.kix.edge.service.controllers.api.EdgeApi;
 import com.ironhack.kix.edge.service.models.dto.ProductDTO;
-import com.ironhack.kix.edge.service.models.dto.SearchPetitionDTO;
+import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
 import com.ironhack.kix.edge.service.models.views.SearchView;
@@ -70,7 +70,7 @@ public class EdgeController implements EdgeApi {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(method = RequestMethod.POST, value = "/products/{productId}")
-    public List<SearchView> searchProduct(@RequestBody SearchPetitionDTO petition) {
+    public List<ProductView> searchProduct(@RequestBody SearchDTO petition) {
         return edgeService.searchProduct(petition);
     }
 

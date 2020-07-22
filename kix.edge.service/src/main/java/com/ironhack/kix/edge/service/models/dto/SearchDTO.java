@@ -1,4 +1,4 @@
-package com.ironhack.kix.product.service.models.dto;
+package com.ironhack.kix.edge.service.models.dto;
 
 import java.util.Map;
 

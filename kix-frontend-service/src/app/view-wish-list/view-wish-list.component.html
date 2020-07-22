@@ -1,0 +1,25 @@
+<mat-list>
+    <div mat-subheader>Wish list</div>
+    <mat-list-item *ngFor="let product of wishList" [routerLink]="['products/'.concat(product.productId)]">
+        <img matListIcon src="{{product.productImages.images[0].concat('?scale=0.2')}}">
+        <div mat-line>{{product.productName}}</div>
+        <div mat-line>{{product.productPrice}} €</div>
+        <mat-action-list (click)="$event.stopPropagation()">
+            <button mat-list-item mat-list-item (click)="deleteProduct(product)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-action-list>
+    </mat-list-item>
+    <p class="mat-list-footer" *ngIf="wishList.length > 0">
+        <button mat-fab color="accent">
+            <mat-icon>save</mat-icon>
+        </button>
+        <button mat-fab color="primary" (click)="deleteWishList()">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+    </p>
+    <p class="mat-list-noitem" *ngIf="! (wishList.length > 0)">
+        <mat-icon>favorite_outline</mat-icon>
+        <span> Your wishlist is empty. 😟</span>
+    </p>
+</mat-list>

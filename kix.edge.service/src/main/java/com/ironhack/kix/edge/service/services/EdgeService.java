@@ -2,12 +2,11 @@ package com.ironhack.kix.edge.service.services;
 
 import com.ironhack.kix.edge.service.controllers.api.EdgeApi;
 import com.ironhack.kix.edge.service.models.dto.ProductDTO;
-import com.ironhack.kix.edge.service.models.dto.SearchPetitionDTO;
+import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
 import com.ironhack.kix.edge.service.models.views.SearchView;
 import com.ironhack.kix.edge.service.models.views.UserView;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.util.List;
 @Service
 public class EdgeService implements EdgeApi {
     @Autowired ProductService productService;
-    @Autowired SearchService searchService;
     @Autowired UserService userService;
 
     @Override
@@ -60,12 +58,9 @@ public class EdgeService implements EdgeApi {
     }
 
     @Override
-    public List<SearchView> searchProduct(SearchPetitionDTO petition) {
-        if(petition.getImageBase64() != null && petition.getSearchText() == null
-                || petition.getSearchText().isEmpty()) {
-            String filter = petition.getFilter().toString().replaceAll("[{}]","");
-            return searchService.searchByImage(petition.getImageBase64(), filter);
-        }
+    public List<ProductView> searchProduct(SearchDTO petition) {
+        if(petition.isImageSearch())
+            return productService.searchProductsByImage(petition);
         return null;
     }
 

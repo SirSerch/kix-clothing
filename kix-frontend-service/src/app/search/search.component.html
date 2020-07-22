@@ -1,1 +1,37 @@
-<p>search works!</p>
+<mat-dialog-content>
+    <h2 mat-dialog-title>Search</h2>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">search</mat-icon>
+                Basic Search
+            </ng-template>
+            <mat-form-field color="accent" class="basic-search">
+                <mat-label>What are you searching for?</mat-label>
+                <input matInput type="search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">image_search</mat-icon>
+                Image Search
+            </ng-template>
+            <mat-card>
+                <mat-card-header id="drop_zone" (drop)="dropHandler($event)" (dragover)="dragOverHandler($event)">
+                    <mat-card-title>Search by image</mat-card-title>
+                    <mat-card-subtitle>Drag and drop to this card or take a picture!</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button color="accent">
+                        <mat-icon>photo_camera</mat-icon>
+                    </button>
+                    <button mat-button color="accent">
+                        <mat-icon>image</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+</mat-dialog-content>

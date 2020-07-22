@@ -3,6 +3,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
 import { StorageService } from '../storage.service';
+import { verifyHostBindings } from '@angular/compiler';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-header',
@@ -19,22 +22,22 @@ export class HeaderComponent implements OnInit {
   router: Router;
 
   hasFavorite = false;
-  favorites = 0;
+
+  searchData: Search;
 
 
   constructor(
       router: Router,
-      private storageService: StorageService
+      public favoriteService: StorageService,
+      public dialog: MatDialog
   ) { 
     this.router = router;
-    this.favorites = this.storageService.obtainFavorites().length;
-    this.favorites > 0 ? this.hasFavorite = true : this.hasFavorite = false;
+    favoriteService.favorites > 0 ? this.hasFavorite = true : this.hasFavorite = false;
   }
 
   ngOnInit(): void {
-    this.storageService.watchStorage().subscribe((data: string) => {
-        parseInt(data) > 0 ? this.hasFavorite = true : this.hasFavorite = false;
-        this.favorites = parseInt(data);
+    this.favoriteService.watchStorage().subscribe((data: string) => {
+      this.favoriteService.favorites > 0 ? this.hasFavorite = true : this.hasFavorite = false;
     });
   }
 
@@ -43,7 +46,31 @@ export class HeaderComponent implements OnInit {
   }
 
   insertAlgo(data: string):void {
-    this.storageService.setItem('products', data);
+    this.favoriteService.setItem('products', data);
   }
 
+  search(){
+    const dialogRef = this.dialog.open(SearchComponent, {
+      data: this.searchData,
+      width: '90%',
+      height: '400px',
+      minWidth: '250px',
+      maxWidth: '400px'
+    });
+    dialogRef.afterClosed().subscribe( searchResult => {
+      if (searchResult !== undefined) {
+        console.log(searchResult);
+      }
+    });
+  }
+
+}
+
+export interface Search{
+  isImageSearch: boolean;
+  filter: {
+    category: string,
+    color: string;
+  };
+  searchBody: string;
 }

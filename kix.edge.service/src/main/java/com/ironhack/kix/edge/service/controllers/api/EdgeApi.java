@@ -1,10 +1,9 @@
 package com.ironhack.kix.edge.service.controllers.api;
 
 import com.ironhack.kix.edge.service.models.dto.ProductDTO;
-import com.ironhack.kix.edge.service.models.dto.SearchPetitionDTO;
+import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
-import com.ironhack.kix.edge.service.models.views.SearchView;
 import com.ironhack.kix.edge.service.models.views.UserView;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public interface EdgeApi {
     List<ProductView> getAllProducts();
     void deleteProductById(String productId);
 
-    List<SearchView> searchProduct(SearchPetitionDTO petition);
+    List<ProductView> searchProduct(SearchDTO petition);
     ProductView indexProductOnSearchEngine(String productId);
     ProductView deleteIndexFromSearchEngine(String productId);
 }

@@ -1,6 +1,7 @@
 package com.ironhack.kix.edge.service.repositories.clients;
 
 import com.ironhack.kix.edge.service.models.dto.ProductDTO;
+import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
@@ -37,4 +38,8 @@ public interface ProductClient {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, value = "/products/{productId}/indexing")
     ProductView deleteIndexProduct(@PathVariable(name = "productId") String productId);
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, value = "/products/search")
+    List<ProductView> searchProductsByImage(@RequestBody SearchDTO searchDTO);
 }

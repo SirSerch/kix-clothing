@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ProductView } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { EdgeURL } from '../utils';
@@ -20,6 +20,9 @@ export class ViewProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllProducts();
+    this.storage.watchStorage().subscribe(update => {
+      this.products.find(product => product.productId === update.productId).isFavorite = update.isFavorite;
+    });
   }
 
   getAllProducts() {

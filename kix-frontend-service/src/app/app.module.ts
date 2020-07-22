@@ -15,6 +15,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTabsModule} from '@angular/material/tabs';
 //////////////////
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,6 +37,8 @@ import { HeaderComponent } from './header/header.component';
 import { ProductListComponent} from './product-list/product-list.component';
 import { IndexProductDialogComponent } from './index-product-dialog/index-product-dialog.component';
 import { LoadingComponentComponent } from './loading-component/loading-component.component';
+import { ViewWishListComponent } from './view-wish-list/view-wish-list.component';
+import { ErrorNotfoundComponent } from './error-notfound/error-notfound.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,9 @@ import { LoadingComponentComponent } from './loading-component/loading-component
     HeaderComponent,
     ProductListComponent,
     IndexProductDialogComponent,
-    LoadingComponentComponent
+    LoadingComponentComponent,
+    ViewWishListComponent,
+    ErrorNotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +78,9 @@ import { LoadingComponentComponent } from './loading-component/loading-component
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTreeModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule,
+    MatTabsModule
     ///////////////////////
   ],
   providers: [],

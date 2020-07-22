@@ -11,10 +11,10 @@
         </div>
         <div class="card-actions">
             <button mat-mini-fab color="basic">
-                <mat-icon *ngIf="! product.isFavorite"  (click)="setFavorite(product)">favorite_border</mat-icon>
-                <mat-icon *ngIf="product.isFavorite" (click)="removeFavorite(product)">favorite</mat-icon>
+                <mat-icon  *ngIf="! product.isFavorite"  (click)="setFavorite(product)">favorite_border</mat-icon>
+                <mat-icon color="accent" *ngIf="product.isFavorite" (click)="removeFavorite(product)">favorite</mat-icon>
             </button>
-            <button mat-mini-fab color="basic">
+            <button *ngIf="false"mat-mini-fab color="basic">
                 <mat-icon>add_shopping_cart</mat-icon>
             </button>
         </div>

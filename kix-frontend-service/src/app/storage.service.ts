@@ -7,12 +7,12 @@ import { ProductView } from './models';
 })
 export class StorageService {
 
-  favorites = 0;
+  public favorites = 0;
 
-  private storageSub = new Subject<String>();
+  private storageSub = new Subject<ProductView>();
 
 
-  constructor() { 
+  constructor() {
     this.favorites = this.obtainFavorites().length;
   }
 
@@ -22,12 +22,12 @@ export class StorageService {
 
   setItem(key: string, data: any): void {
     localStorage.setItem(key, data);
-    this.storageSub.next('changed');
+    this.storageSub.next();
   }
 
   removeItem(key): void {
     localStorage.removeItem(key);
-    this.storageSub.next('changed');
+    this.storageSub.next();
   }
 
   setFavorite(product: ProductView): void {
@@ -36,7 +36,7 @@ export class StorageService {
     localStorage.setItem('favorites', JSON.stringify(favorite));
     this.favorites++;
     product.isFavorite = true;
-    this.storageSub.next(this.favorites.toString());
+    this.storageSub.next(product);
   }
 
   removeFavorite(product: ProductView): void {
@@ -44,16 +44,19 @@ export class StorageService {
     localStorage.setItem('favorites', JSON.stringify(this.deleteFromArray(product.productId, favorite)));
     this.favorites--;
     product.isFavorite = false;
-    this.storageSub.next(this.favorites.toString());
+    this.storageSub.next(product);
   }
 
   obtainFavorites(): ProductView[] {
-    let favorite: ProductView[] = JSON.parse(localStorage.getItem('favorites'));
-    if (favorite === null) {
-      return [];
-    } else {
-      return favorite;
+    if (localStorage.getItem('favorites') !== 'undefined') {
+      let favorite: ProductView[] = JSON.parse(localStorage.getItem('favorites'));
+      if (favorite === null) {
+        return [];
+      } else {
+        return favorite;
+      }
     }
+    return [];
   }
 
   private deleteFromArray(key: string, array: ProductView[]): ProductView[] {

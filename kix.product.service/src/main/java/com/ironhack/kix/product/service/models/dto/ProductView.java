@@ -19,6 +19,7 @@ public class ProductView {
     private LocalDateTime createdTime;
     private LocalDateTime lastUpdateTime;
     private LocalDateTime lastIndexedTime;
+    private Float score;
 
     public ProductView() {
     }
@@ -34,6 +35,14 @@ public class ProductView {
         this.createdTime = product.getCreatedTime();
         this.lastUpdateTime = product.getLastUpdateTime();
         this.lastIndexedTime = product.getLastIndexedTime();
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
     }
 
     public String getProductId() {

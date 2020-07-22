@@ -8,12 +8,19 @@
         <mat-icon>exit_to_app</mat-icon>
     </button>
     <div class="navigate-buttons" *ngIf="router.url === '/'">
-        <button mat-icon-button color="basic">
-            <mat-icon>person</mat-icon>
+        <button mat-icon-button (click)="search()">
+            <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button color="basic">
-            <mat-icon matBadge="{{favorites}}" matBadgeColor="warn" matBadgeSize="small" *ngIf="hasFavorite">favorite</mat-icon>
-            <mat-icon *ngIf="! hasFavorite">favorite</mat-icon>
+            <mat-icon *ngIf="false">person</mat-icon>
+            <mat-icon>person_outline</mat-icon>
         </button>
+        <button mat-icon-button color="basic" [matMenuTriggerFor]="wishList">
+            <mat-icon matBadge="{{favoriteService.favorites}}" matBadgeColor="accent" matBadgeSize="small" *ngIf="hasFavorite">favorite</mat-icon>
+            <mat-icon *ngIf="! hasFavorite">favorite_outline</mat-icon>
+        </button>
+        <mat-menu #wishList="matMenu" style="max-width: none !important;">
+            <app-view-wish-list></app-view-wish-list>
+        </mat-menu>
     </div>
 </mat-toolbar>

@@ -1,10 +1,10 @@
 <div class="card">
-    <div class="card-img-container" [routerLink]="['products/'.concat(product.productId)]">
+    <div class="card-img-container" [routerLink]="['/products/'.concat(product.productId)]">
         <img class="card-img" src="{{product.productImages.images[0]}}">
         <img class="card-img-hover" src="{{product.productImages.images[1]}}">
     </div>
     <div class="card-content">
-        <div class="card-grouped-title" [routerLink]="['products/'.concat(product.productId)]">
+        <div class="card-grouped-title" [routerLink]="['/products/'.concat(product.productId)]">
             <h1 class="card-title">{{product.productName}}</h1>
             <h3 class="card-subtitle">{{product.productPrice}} €</h3>
         </div>

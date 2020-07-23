@@ -22,8 +22,9 @@ export class ProductListComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
 
-  isLoading = true;
+  isLoading = false;
   isErrorLoading = false;
+  isEmpty = false;
 
   snackBar: SnackBar;
 
@@ -43,6 +44,7 @@ export class ProductListComponent implements OnInit {
       products => {
         console.log(products);
         this.isLoading = false;
+        this.isEmpty = products.length === 0;
         this.productList = products;
         this.dataSource = new MatTableDataSource(products);
       },

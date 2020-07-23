@@ -1,8 +1,9 @@
 <div class="product-view">
-<div class="no-products" *ngIf="products.length === 0">
+<div class="no-products" *ngIf="noProducts">
     <h1 class="emoji">😿</h1>
     <h2 class="title">It will sound very curious to you ... but we don't have any product right now to show</h2>
 </div>
 <app-product-card *ngFor="let product of products" [product]="product" (favorite)="favorite($event)">
 </app-product-card>
 </div>
+<app-loading-util [loading]="loading" [error]="error"></app-loading-util>

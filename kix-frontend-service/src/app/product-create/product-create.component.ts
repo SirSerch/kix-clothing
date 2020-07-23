@@ -36,7 +36,7 @@ export class ProductCreateComponent implements OnInit {
     },
     error => {
       this.creating = !(this.creatingError = true);
-      this.openPanel('An error occurred while creating the product, please try again later', 'ERROR')
+      this.openPanel('An error occurred while creating the product, please try again later', 'ERROR');
       console.log(error);
     });
   }

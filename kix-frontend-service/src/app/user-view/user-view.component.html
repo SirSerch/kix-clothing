@@ -1,0 +1,5 @@
+<mat-toolbar>
+    <mat-toolbar-row><mat-icon>supervisor_account</mat-icon><h1>View User</h1></mat-toolbar-row>
+</mat-toolbar>
+<app-loading-util  [loading]="loading" [error]="errorLoading" [goBack]="'products'" [title]="loadingTitle"></app-loading-util>
+<app-user-form [updateUser]="user.asObservable()" (user)="updateUser($event)" (loading)="loading = $event"></app-user-form>

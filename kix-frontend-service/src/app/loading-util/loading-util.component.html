@@ -1,4 +1,4 @@
-<div class="loading-overlay" *ngIf="loading && !error">
+<div class="loading-overlay" *ngIf="loading || error">
     <div class="loading-header">
         <div class="loading-title">
             <h1 *ngIf="loading && (!error)">{{title}}</h1>

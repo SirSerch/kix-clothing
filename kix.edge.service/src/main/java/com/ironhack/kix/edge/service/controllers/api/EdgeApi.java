@@ -5,6 +5,7 @@ import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
 import com.ironhack.kix.edge.service.models.views.UserView;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface EdgeApi {
     List<ProductView> searchProduct(SearchDTO petition);
     ProductView indexProductOnSearchEngine(String productId);
     ProductView deleteIndexFromSearchEngine(String productId);
+    void updateUser(@RequestBody UserDTO user, Long userId);
 }

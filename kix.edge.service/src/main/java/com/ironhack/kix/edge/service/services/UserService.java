@@ -29,4 +29,8 @@ public class UserService {
         userClient.deleteUser(id);
     }
 
+    protected void updateUser(UserDTO user, Long productId){
+        userClient.updateUser(user, productId);
+    }
+
 }

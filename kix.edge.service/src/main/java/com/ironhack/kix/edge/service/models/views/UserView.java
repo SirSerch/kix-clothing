@@ -2,11 +2,13 @@ package com.ironhack.kix.edge.service.models.views;
 
 import com.ironhack.kix.edge.service.models.dto.Address;
 import com.ironhack.kix.edge.service.models.dto.Cart;
+import com.ironhack.kix.edge.service.models.enums.Role;
 
 import java.util.List;
 
 public class UserView {
     private Long id;
+    private Role role;
     private String name;
     private String lastName;
     private String password;
@@ -16,6 +18,14 @@ public class UserView {
     private List<Long> payments;
 
     public UserView() {
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Long getId() {

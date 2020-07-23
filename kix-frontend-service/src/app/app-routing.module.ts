@@ -3,14 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ViewProductsComponent } from './view-products/view-products.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProductView } from './models';
+import { UserViewComponent } from './user-view/user-view.component';
 import { MainComponent } from './main/main.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { UserFormComponent } from './user-form/user-form.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 import { ErrorNotfoundComponent } from './error-notfound/error-notfound.component';
 import { SearchViewComponent } from './search-view/search-view.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { ProductShowcaseComponent } from './product-showcase/product-showcase.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,10 @@ const routes: Routes = [
       {
         path: 'products/search',
         component: SearchViewComponent
+      },
+      {
+        path: 'products/:id',
+        component: ProductShowcaseComponent
       }
     ]
   },
@@ -51,8 +57,16 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UserFormComponent
-      }
+        component: UserListComponent
+      },
+      {
+        path: 'users/new',
+        component: UserCreateComponent
+      },
+      {
+        path: 'users/:id',
+        component: UserViewComponent
+      },
     ]
   },
   {

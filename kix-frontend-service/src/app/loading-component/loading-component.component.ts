@@ -13,6 +13,8 @@ export class LoadingComponentComponent implements OnInit {
   @Input()
   isLoading: boolean;
 
+  @Input()
+  isEmpty?: boolean = false;
   constructor() { }
 
   ngOnInit(): void {

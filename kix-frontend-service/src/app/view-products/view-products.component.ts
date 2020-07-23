@@ -11,6 +11,10 @@ import { StorageService } from '../storage.service';
 })
 export class ViewProductsComponent implements OnInit {
 
+  noProducts: boolean
+  loading: boolean
+  error: boolean
+
   products: ProductView[] = [];
 
   constructor(
@@ -26,17 +30,23 @@ export class ViewProductsComponent implements OnInit {
   }
 
   getAllProducts(): void {
+    this.error = !(this.loading = true);
     this.http.get<ProductView[]>(EdgeURL.concat('/products')).subscribe(products => {
+      if (products.length === 0) this.noProducts = true;
       this.products = this.storage.setProducts(products);
+      this.loading = false;
     },
-      error => console.log(error));
+      error => {
+        this.error = true;
+        console.log(error);
+      });
   }
 
-  favorite(favorite: Favorite): void{
-    if (favorite.action === FavoriteAction.ADD){
+  favorite(favorite: Favorite): void {
+    if (favorite.action === FavoriteAction.ADD) {
       this.storage.setFavorite(favorite.product);
     }
-    if (favorite.action === FavoriteAction.REMOVE){
+    if (favorite.action === FavoriteAction.REMOVE) {
       this.storage.removeFavorite(favorite.product);
     }
   }

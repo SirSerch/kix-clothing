@@ -1,1 +1,53 @@
-<p>user-form works!</p>
+<mat-toolbar>
+    <mat-toolbar-row>    
+        <button mat-flat-button color="primary" (click)="sendClient()"
+        [disabled]="_user.invalid">
+        Save Client <mat-icon>save</mat-icon>
+    </button></mat-toolbar-row>
+</mat-toolbar>
+<form [formGroup]="_user">
+    <div class="user-information">
+        <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of roles" [value]="role.value">
+                {{role.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput placeholder="John" formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input type="text" matInput placeholder="Doe" formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="john@doe.com" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="passw0rd" formControlName="password">
+        </mat-form-field>
+    </div>
+    <div class="user-address" formGroupName="address">
+        <mat-form-field appearance="fill">
+            <mat-label>Street Address</mat-label>
+            <input type="text" matInput placeholder="Fake Street, 123" formControlName="streetAddress">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input type="text" matInput placeholder="Madrid" formControlName="city">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Country</mat-label>
+            <input type="text" matInput placeholder="Spain" formControlName="country">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Zip Code</mat-label>
+            <input type="number" maxlength="5" matInput placeholder="28800" formControlName="zipCode">
+        </mat-form-field>
+    </div>
+</form>

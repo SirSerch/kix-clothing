@@ -1,0 +1,5 @@
+<mat-toolbar>
+    <mat-toolbar-row><mat-icon>supervisor_account</mat-icon> <h1>Create new User</h1></mat-toolbar-row>
+</mat-toolbar>
+<app-loading-util [loading]="creating" [error]="creatingError"[title]="'Registering user'" [goBack]="'/dashboard/users'"></app-loading-util>
+<app-user-form (user)="createUser($event)"></app-user-form>

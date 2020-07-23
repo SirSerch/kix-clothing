@@ -49,6 +49,10 @@ import { ProductCreateComponent } from './product-create/product-create.componen
 import { LoadingUtilComponent } from './loading-util/loading-util.component';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { ProductShowcaseComponent } from './product-showcase/product-showcase.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserViewComponent } from './user-view/user-view.component';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +75,11 @@ import { ProductShowcaseComponent } from './product-showcase/product-showcase.co
     ProductCreateComponent,
     LoadingUtilComponent,
     ProductDeleteComponent,
-    ProductShowcaseComponent
+    ProductShowcaseComponent,
+    UserListComponent,
+    UserCreateComponent,
+    UserViewComponent,
+    UserDeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 package com.ironhack.kix.product.service.clients;
 
+import com.ironhack.kix.product.service.clients.fallbacks.ImageClientFallback;
 import com.ironhack.kix.product.service.models.dto.GalleryDTO;
 import com.ironhack.kix.product.service.models.dto.GalleryView;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@FeignClient("kix-image-service")
+@FeignClient(value = "kix-image-service", fallback = ImageClientFallback.class)
 public interface ImageClient {
 
     @ResponseStatus(HttpStatus.OK)

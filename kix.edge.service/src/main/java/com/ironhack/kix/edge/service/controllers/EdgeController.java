@@ -5,7 +5,6 @@ import com.ironhack.kix.edge.service.models.dto.ProductDTO;
 import com.ironhack.kix.edge.service.models.dto.SearchDTO;
 import com.ironhack.kix.edge.service.models.dto.UserDTO;
 import com.ironhack.kix.edge.service.models.views.ProductView;
-import com.ironhack.kix.edge.service.models.views.SearchView;
 import com.ironhack.kix.edge.service.models.views.UserView;
 import com.ironhack.kix.edge.service.services.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,12 @@ public class EdgeController implements EdgeApi {
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}")
     public void deleteUserById(@PathVariable("userId") Long userId) {
         edgeService.deleteUserById(userId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
+    public void updateUser(@RequestBody UserDTO user, @PathVariable(name = "userId") Long userId) {
+        edgeService.updateUser(user, userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

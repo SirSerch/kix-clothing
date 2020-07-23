@@ -48,6 +48,11 @@ public class EdgeService implements EdgeApi {
     }
 
     @Override
+    public void updateUser(UserDTO user, Long userId) {
+        userService.updateUser(user, userId);
+    }
+
+    @Override
     public ProductView createNewProduct(ProductDTO product) {
         return productService.createNewProduct(product);
     }

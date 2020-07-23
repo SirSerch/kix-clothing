@@ -1,5 +1,5 @@
 <mat-toolbar>
     <mat-toolbar-row><mat-icon>store</mat-icon><h1>View product</h1></mat-toolbar-row>
 </mat-toolbar>
-<app-loading-util [loading]="loading" [error]="errorLoading" [goBack]="'products'" [title]="loadingTitle"></app-loading-util>
+<app-loading-util  [loading]="loading" [error]="errorLoading" [goBack]="'/dashboard/users'" [title]="loadingTitle"></app-loading-util>
 <app-product-form [updateProduct]="product.asObservable()"(product)="updateProduct($event)" (loading)="imageLoading($event)"></app-product-form>

@@ -1,1 +1,21 @@
-<p>product-showcase works!</p>
+<div class="showcase" *ngIf="product">
+    <div class="showcase-images">
+        <div class="showcase-image" *ngFor = "let image of product.productImages.images">
+            <img src="{{image}}">
+        </div>
+    </div>
+    <div class="showcase-content">
+        <div class="showcase-title">
+            <h1>{{product.productName}}</h1>
+        </div>
+        <div class="showcase-price">
+            <span>{{product.productPrice}} €</span>
+        </div>
+        <p class="showcase-description">{{product.productDescription}}</p>
+        <div class="showcase-actions" *ngIf="false">
+            <button mat-fab color="accent">
+                <mat-icon>favorite</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

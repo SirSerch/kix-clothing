@@ -1,4 +1,4 @@
-package com.ironhack.kix.users.service.models.enums;
+package com.ironhack.kix.edge.service.models.enums;
 
 public enum Role {
     ADMIN,

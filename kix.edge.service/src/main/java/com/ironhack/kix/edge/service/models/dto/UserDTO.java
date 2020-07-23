@@ -1,9 +1,12 @@
 package com.ironhack.kix.edge.service.models.dto;
 
+import com.ironhack.kix.edge.service.models.enums.Role;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class UserDTO {
+    private Role role;
     private String name;
     private String lastName;
     private String password;
@@ -13,6 +16,14 @@ public class UserDTO {
     private List<Long> payments;
 
     public UserDTO() {
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getName() {

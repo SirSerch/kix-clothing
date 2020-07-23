@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Product, ProductView } from '../models';
@@ -7,6 +7,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-form',
@@ -16,6 +17,8 @@ import { Observable } from 'rxjs';
 export class ProductFormComponent implements OnInit {
 
   _product: FormGroup;
+
+  @Output() loading = new EventEmitter<boolean>();
 
   @Output()
   product = new EventEmitter<Product>();
@@ -100,12 +103,13 @@ export class ProductFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
     this.categories.sort((a, b) => {
-      if(a.value > b.value) return 1;
-      if(a.value < b.value) return -1;
+      if (a.value > b.value) return 1;
+      if (a.value < b.value) return -1;
       return 0;
     });
     this._product = this.fb.group({
@@ -116,28 +120,35 @@ export class ProductFormComponent implements OnInit {
       productColor: ['', [Validators.required]],
     });
 
-    if(this.updateProduct){
-    this.updateProduct.subscribe(product => {
-      console.log(product);
-      this._product.setValue({
-        productName: product.productName,
-        productDescription: product.productDescription,
-        productPrice: product.productPrice,
-        productCategory: '',
-        productColor: ''
+    if (this.updateProduct) {
+      this.updateProduct.subscribe(product => {
+        console.log(product);
+        this._product.setValue({
+          productName: product.productName,
+          productDescription: product.productDescription,
+          productPrice: product.productPrice,
+          productCategory: '',
+          productColor: ''
+        });
+        product.productImages.images.forEach(element => {
+          let image: Image = new Image();
+          fetch(element)
+            .then(response => response.blob())
+            .then(blob => new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                image.image = reader.result.toString().replace('data:application/octet-stream;base64,', '');
+                this.images.push(image);
+                if(this.images.length === product.productImages.images.length){
+                  this.loading.emit(false);
+                }
+              }
+              reader.onerror = reject
+              reader.readAsDataURL(blob);
+            }));
+        });
       });
-      product.productImages.images.forEach(element => {
-        const img: HTMLImageElement = document.createElement('img');
-        img.src = element;
-        img.setAttribute('crossOrigin', 'anonymous');
-        img.onload = () => {
-          const image: Image = new Image();
-          image.image = this.getBase64FromImageUrl(img);
-          this.images.push(image);
-        };
-      });
-    });
-  }
+    }
   }
 
   orderImage(event: CdkDragDrop<string[]>): void {
@@ -185,13 +196,13 @@ export class ProductFormComponent implements OnInit {
   }
 
   getBase64FromImageUrl(img: HTMLImageElement): string {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-      const dataURL = canvas.toDataURL('image/jpg');
-      return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const dataURL = canvas.toDataURL('image/jpg');
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   }
 
 }

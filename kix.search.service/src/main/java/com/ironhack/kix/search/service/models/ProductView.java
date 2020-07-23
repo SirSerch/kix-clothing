@@ -103,4 +103,19 @@ public class ProductView {
         this.lastIndexedTime = lastIndexedTime;
     }
 
+    @Override
+    public String toString() {
+        return "ProductView{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productDescription='" + productDescription + '\'' +
+                ", productPrice=" + productPrice +
+                ", productTags=" + productTags.toString() +
+                ", productImages=" + productImages.toString() +
+                ", isIndexed=" + isIndexed +
+                ", createdTime=" + createdTime +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", lastIndexedTime=" + lastIndexedTime +
+                '}';
+    }
 }

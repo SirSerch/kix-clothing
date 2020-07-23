@@ -2,7 +2,7 @@
     <button mat-icon-button color="link" (click)="navbar.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="example-app-name" [routerLink]="([''])">KIX CLOTHING</h1>
+    <h1 class="logo" [routerLink]="([''])">KIX CLOTHING</h1>
     <span class="spacer"></span>
     <button mat-icon-button color="basic" *ngIf="router.url.match('/dashboard.*')" (click)="router.navigate([''])">
         <mat-icon>exit_to_app</mat-icon>

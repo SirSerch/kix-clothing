@@ -1,0 +1,16 @@
+<div class="loading-overlay" *ngIf="loading && !error">
+    <div class="loading-header">
+        <div class="loading-title">
+            <h1 *ngIf="loading && (!error)">{{title}}</h1>
+            <h1 class="error" *ngIf="error">ERROR</h1>
+            <p class="loading-error-message" *ngIf="error && errorMessage">{{errorMessage}}</p>
+        </div>
+        <div class="loading-content">
+            <mat-progress-bar *ngIf="loading && (!error)" mode="buffer" color="accent"></mat-progress-bar>
+            <mat-progress-bar *ngIf="error" mode="determine" color="accent"></mat-progress-bar>
+            <div class="loading-action" *ngIf="error">
+                <button mat-flat-button color="accent" [routerLink]=([goBack])><mat-icon>keyboard_arrow_left</mat-icon> Go Back</button>
+            </div>
+        </div>
+    </div>
+</div>

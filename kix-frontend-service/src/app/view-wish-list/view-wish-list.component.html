@@ -1,7 +1,7 @@
 <mat-list>
     <div mat-subheader>Wish list</div>
     <mat-list-item *ngFor="let product of wishList" [routerLink]="['products/'.concat(product.productId)]">
-        <img matListIcon src="{{product.productImages.images[0].concat('?scale=0.2')}}">
+        <img matListIcon src="{{product.productImages.images[0]}}">
         <div mat-line>{{product.productName}}</div>
         <div mat-line>{{product.productPrice}} €</div>
         <mat-action-list (click)="$event.stopPropagation()">

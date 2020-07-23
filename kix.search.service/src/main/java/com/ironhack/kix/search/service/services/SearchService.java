@@ -8,6 +8,7 @@ import com.ironhack.kix.search.service.models.ProductView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -20,6 +21,9 @@ public class SearchService implements SearchApi {
     @Autowired ImageClient imageClient;
     @Autowired GoogleService googleService;
 
+    @Value("${STORAGE_NAME}")
+    String storageName;
+
     @Override
     public List<ImageSearchResult> searchProductsByImage(String imageBase64, String filter) {
         return googleService.searchProductByImage(imageBase64, filter);
@@ -29,19 +33,14 @@ public class SearchService implements SearchApi {
     public IndexView indexProduct(ProductView productView) {
         if(productView.isIndexed() || productView.getLastIndexedTime().getYear() > 1970)
             this.deleteIndexedProduct(productView.getProductId());
-
-            LOGGER.info("Indexing product: " + productView.getProductId());
-            List<byte[]> productImages = new LinkedList<>();
-            productView.getProductImages().getImages().forEach((imageId -> {
-                productImages.add(imageClient.getImageWithImageId(
-                        Long.valueOf(imageId.replaceAll("http(|s):/.*/images/", "")), null).getBody()
-                );
-            }));
+            LOGGER.info("Indexing product: " + productView.toString());
             googleService.createProductInProjectLocation(productView);
             googleService.addProductToProductSet(productView.getProductId());
-            productImages.stream().map(googleService::uploadProductImageToProductStorage).forEach(gscURI -> {
+            productView.getProductImages().getImages().forEach(httpURL -> {
+                LOGGER.info("HttpURL: " + httpURL);
+                String gscURI = httpURL.replaceAll("https://storage.googleapis.com/", "gs://");
                 LOGGER.info("gscURI: " + gscURI);
-                String referenceImageId = gscURI.replaceAll("gs://[a-z-]+/", "").replaceAll(".jpg", "");
+                String referenceImageId = gscURI.replaceAll("gs://[a-z0-9-]+/", "").replaceAll(".jpg", "");
                 LOGGER.info("referenceImageId: " + referenceImageId);
                 googleService.addReferenceImageToProduct(productView.getProductId(), gscURI, referenceImageId);
             });

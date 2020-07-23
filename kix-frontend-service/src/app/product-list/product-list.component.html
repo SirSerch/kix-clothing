@@ -34,7 +34,7 @@
     <ng-container matColumnDef="image">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Image</mat-header-cell>
         <mat-cell *matCellDef="let product"><img height="40px"
-                src="{{product.productImages.images[0].concat('?scale=0.05')}}"></mat-cell>
+                src="{{product.productImages.images[0]}}"></mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
@@ -48,7 +48,7 @@
             <button mat-icon-button matTooltip="View Product" [routerLink]="[product.productId]">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Delete Product">
+            <button mat-icon-button matTooltip="Delete Product" (click)="deleteProduct(product, tableIndex)">
                 <mat-icon>delete</mat-icon>
             </button>
         </mat-cell>

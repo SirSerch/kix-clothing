@@ -29,4 +29,12 @@ public class GalleryView {
 
     public GalleryView() {
     }
+
+    @Override
+    public String toString() {
+        return "GalleryView{" +
+                "galleryId=" + galleryId +
+                ", images=" + images.toString() +
+                '}';
+    }
 }

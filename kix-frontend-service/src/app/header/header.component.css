@@ -12,6 +12,11 @@ mat-toolbar {
     max-width: none !important;
 }
 
+.logo {
+    letter-spacing: 5px !important;
+    margin: 0 20px;
+}
+
 /*
 APPLY IN STYLE.CSS
 .mat-menu-panel {

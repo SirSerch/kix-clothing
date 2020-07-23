@@ -1,4 +1,4 @@
-package com.ironhack.kix.search.service.models.utils;
+package com.ironhack.kix.image.service.models.utils;
 
 import com.google.common.hash.Hashing;
 

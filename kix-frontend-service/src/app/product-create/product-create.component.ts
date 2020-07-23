@@ -15,6 +15,9 @@ export class ProductCreateComponent implements OnInit {
 
   product: FormGroup;
 
+  creating: boolean;
+  creatingError: boolean;
+
   constructor(
     private snackBar: MatSnackBar,
     private http: HttpClient,
@@ -25,13 +28,15 @@ export class ProductCreateComponent implements OnInit {
   }
 
   createProduct(product: Product): void {
+    this.creatingError = !(this.creating = true);
     this.http.post<ProductView>(EdgeURL.concat('/product'), product).subscribe( result => {
-      this.openPanel(`Product ${result.productId.substring(0,8)} created correctly!`, 'SUCCESS')
-      this.router.navigate(['products']);
+      this.openPanel(`Product ${result.productId.substring(0,8)} created correctly!`, 'SUCCESS');
+      this.creating = false;
+      this.router.navigate(['dashboard/products']);
     },
     error => {
+      this.creating = !(this.creatingError = true);
       this.openPanel('An error occurred while creating the product, please try again later', 'ERROR')
-      this.router.navigate(['dashboard/products']);
       console.log(error);
     });
   }

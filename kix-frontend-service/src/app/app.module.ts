@@ -46,6 +46,9 @@ import { SearchViewComponent } from './search-view/search-view.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { LoadingUtilComponent } from './loading-util/loading-util.component';
+import { ProductDeleteComponent } from './product-delete/product-delete.component';
+import { ProductShowcaseComponent } from './product-showcase/product-showcase.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,10 @@ import { ProductCreateComponent } from './product-create/product-create.componen
     SearchViewComponent,
     ProductCardComponent,
     ProductViewComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    LoadingUtilComponent,
+    ProductDeleteComponent,
+    ProductShowcaseComponent
   ],
   imports: [
     BrowserModule,

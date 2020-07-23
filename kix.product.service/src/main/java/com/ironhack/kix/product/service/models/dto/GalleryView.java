@@ -34,4 +34,12 @@ public class GalleryView {
     public GalleryView(Product product){
         this.galleryId = product.getProductGallery();
     }
+
+    @Override
+    public String toString() {
+        return "GalleryView{" +
+                "galleryId=" + galleryId +
+                ", images=" + images.toString() +
+                '}';
+    }
 }

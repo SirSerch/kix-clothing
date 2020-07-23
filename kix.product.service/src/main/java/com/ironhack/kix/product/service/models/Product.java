@@ -119,4 +119,20 @@ public class Product {
     public void setLastIndexedTime(LocalDateTime lastIndexedTime) {
         this.lastIndexedTime = lastIndexedTime;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productDescription='" + productDescription + '\'' +
+                ", productPrice=" + productPrice +
+                ", productGallery=" + productGallery +
+                ", productTags=" + productTags.toString() +
+                ", isIndexed=" + isIndexed +
+                ", createdTime=" + createdTime +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", lastIndexedTime=" + lastIndexedTime +
+                '}';
+    }
 }

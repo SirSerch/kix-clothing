@@ -1,8 +1,5 @@
 package com.ironhack.kix.image.service.models;
 
-import com.ironhack.kix.image.service.exceptions.InvalidBase64ImageException;
-import com.sun.jersey.core.util.Base64;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,18 +7,15 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long imageId;
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+    private String image;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ImageGallery gallery;
 
     public Image() {
     }
 
-    public Image(String base64Image) {
-        if(Base64.isBase64(base64Image) && ! base64Image.isEmpty())
-            this.image = Base64.decode(base64Image);
-        else throw new InvalidBase64ImageException();
+    public Image(String url) {
+        this.image = url;
     }
 
     public Long getImageId() {
@@ -32,12 +26,12 @@ public class Image {
         this.imageId = imageId;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImage(String imageUrl) {
+        this.image = imageUrl;
     }
 
     public ImageGallery getGallery() {
@@ -48,7 +42,4 @@ public class Image {
         this.gallery = gallery;
     }
 
-    public String getBase64Image(){
-        return new String(Base64.encode(this.image));
-    }
 }

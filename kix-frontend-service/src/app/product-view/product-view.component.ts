@@ -19,6 +19,10 @@ export class ProductViewComponent implements OnInit {
 
   product?: Subject<ProductView> = new Subject<ProductView>();
 
+  loading: boolean;
+  errorLoading: boolean;
+  loadingTitle: string = 'Loading Images';
+
 
 
   constructor(
@@ -30,19 +34,30 @@ export class ProductViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.routerParam.paramMap.subscribe(params => {
+      this.errorLoading = !(this.loading = true);
       this.http.get<ProductView>(EdgeURL.concat(`/products/${params.get('product')}`)).subscribe(product => {
+        this.productId = params.get('product');
         this._product = product;
         this.product.next(product);
       },
       error => {
+        this.loading = !(this.errorLoading = true);
         this.openPanel(`Can't obtain the product whith id: ${params.get('product')}`, 'ERROR');
         this.router.navigate(['products']);
       });
     });
   }
 
-  updateProduct(product: Product){
-    
+  updateProduct(product: Product): void{
+    this.loadingTitle = 'Updating product';
+    this.errorLoading = !(this.loading = true);
+    this.http.put(EdgeURL.concat(`/products/${this.productId}`), product).subscribe(success => {
+      this.openPanel(`Product with id: ${this.productId.substring(0, 7)} UPDATED correctly!`, 'SUCCESS');
+      this.router.navigateByUrl('/dashboard/products');
+    }, error => {
+      this.loading = !(this.errorLoading = true);
+      this.openPanel(`ERROR trying to update Product with id: ${this.productId}`, 'ERROR');
+    });
   }
 
   openPanel(message: string, action: string): void{
@@ -52,6 +67,10 @@ export class ProductViewComponent implements OnInit {
       horizontalPosition: 'start',
       panelClass: action !== 'ERROR' ? 'panel-success' : 'panel-error'
     });
+  }
+
+  imageLoading(event){
+    this.loading = event;
   }
 
 }

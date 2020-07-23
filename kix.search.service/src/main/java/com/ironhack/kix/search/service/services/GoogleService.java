@@ -195,7 +195,7 @@ public class GoogleService {
     }
 
     public void deleteIndexedProduct(String productId){
-        this.getAllReferencesImagesByProductId(productId).forEach(this::deleteProductImageFromProductStorage);
+        //this.getAllReferencesImagesByProductId(productId).forEach(this::deleteProductImageFromProductStorage);
         this.deleteProductFromProjectLocation(productId);
     }
 

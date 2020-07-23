@@ -67,20 +67,26 @@ public class ProductService implements ProductApi {
     @Override
     public void updateProduct(ProductDTO updateProduct, String productId) {
         Product product = this.getProductByProductId(productId);
+        searchClient.deleteIndexedProduct(productId);
         imageClient.deleteAllImagesByGalleryId(product.getProductGallery());
         GalleryView gallery = imageClient.createNewGallery(new GalleryDTO(updateProduct.getProductImages()));
         updateProduct.setProductId(productId);
         Product newProduct = new Product(updateProduct, gallery.getGalleryId());
+        productRepository.deleteById(productId);
         productRepository.save(newProduct);
     }
 
     @Override
     public ProductView indexProduct(String productId) {
+        LOGGER.info("Index product");
         Product product = this.getProductByProductId(productId);
+        LOGGER.info("Indexing :" + product.toString());
         GalleryView gallery = imageClient.getGalleryById(product.getProductGallery());
+        LOGGER.info(gallery.toString());
         IndexView indexView = searchClient.indexProduct(new ProductView(product, gallery));
         product.setIndexed(true);
         product.setLastIndexedTime(indexView.getIndexedTime());
+        LOGGER.info("Product: " + product.toString());
         return new ProductView(productRepository.save(product), gallery);
     }
 
@@ -88,6 +94,7 @@ public class ProductService implements ProductApi {
     public ProductView deleteIndexProduct(String productId) {
         Product product = this.getProductByProductId(productId);
         GalleryView gallery = imageClient.getGalleryById(product.getProductGallery());
+        LOGGER.info("Delete indexing, gallery: " + gallery.toString());
         searchClient.deleteIndexedProduct(productId);
         product.setIndexed(false);
         product.setLastIndexedTime(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC));
@@ -100,7 +107,7 @@ public class ProductService implements ProductApi {
         Product product = this.getProductByProductId(productId);
         searchClient.deleteIndexedProduct(productId);
         imageClient.deleteAllImagesByGalleryId(product.getProductGallery());
-        productRepository.deleteById(this.getProductById(productId).getProductId());
+        productRepository.deleteById(productId);
     }
 
     public List<ProductView> searchProduct(SearchDTO searchDTO){
@@ -120,6 +127,7 @@ public class ProductService implements ProductApi {
     private Product getProductByProductId(String productId) {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
+
 
     /**
      * @Override public void updateProduct(ProductDTO updateProduct, String productId) {

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Do you want to delete product: {{product.productId.substring(0, 7)}}?</h2>
+<h3>This action cannot be undone, be careful</h3>
+<p>Deleting a product deletes its information, images and indexing</p>
+<div class="loading" *ngIf="deleting && !errorDeleting">
+    <h3 class="loading-title">DELETING</h3>
+    <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+</div>
+<div class="error loading" *ngIf="!deleting && errorDeleting">
+    <h3 class="loading-title">ERROR</h3>
+    <p>An Error was occured while trying to index the product. Please, try to index the product later</p>
+    <mat-progress-bar mode="determinate" value="100" color="accent"></mat-progress-bar>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="accent" (click)="deleteProduct()">Yes, delete it!</button>
+    <button mat-button color="basic" [mat-dialog-close] cdkFocusInitial>Cancel</button>
+  </div>

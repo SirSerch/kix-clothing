@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.panel-success {
+    background-color: #81c784;
+}
+
+.panel-success span {
+    color: white;
+}
+
+.panel-success button {
+    color: purple;
+}
+
+.panel-error {
+    background-color: #f44336;
+}
+
+.panel-error span {
+    color: black;
+}
+
+.panel-error button {
+    color: purple;
+}

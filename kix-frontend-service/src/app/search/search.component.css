@@ -1,0 +1,57 @@
+
+
+.tab-icon {
+    margin-right: 8px;
+}
+
+.basic-search {
+    margin: 20px 0;
+    width: 100%;
+    font-size: 30px;
+}
+
+mat-card #drop_zone {
+    margin: 20px 0;
+    padding: 20px;
+    text-align: center;
+    border: 2px dashed #ccc;
+    box-shadow: none !important;
+    border-radius: 20px;
+}
+
+.mat-card-header {
+    display: block !important;
+   
+}
+
+.mat-card-header mat-icon {
+    font-size: 40px !important;
+    height: 40px !important;
+    width: 40px !important;
+}
+
+.loading {
+    display: flex;
+    height: 200px;
+    padding: 10px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loading .loading-title {
+    letter-spacing: 2px !important;
+    font-weight: 600;
+}
+
+.error .loading-title{
+    margin-bottom: 0px;
+}
+
+.error p {
+    text-align: justify;
+}
+
+.emoji {
+    font-size: 50px;
+}

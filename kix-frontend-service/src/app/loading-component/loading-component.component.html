@@ -1,0 +1,19 @@
+<div class="loading" *ngIf="isLoading || isErrorLoading || isEmpty" style="text-align: center;padding: 20px;">
+    <mat-progress-spinner mode="indeterminate" *ngIf="isLoading" style="margin: 0 auto;"></mat-progress-spinner>
+    <div *ngIf="isErrorLoading">
+        <mat-card-title>
+            The server is taking longer than usual to respond <mat-icon>sentiment_dissatisfied</mat-icon>
+        </mat-card-title>
+        <mat-card-subtitle>
+            Please try again later
+        </mat-card-subtitle>
+    </div>
+    <div *ngIf="isEmpty">
+        <mat-card-title>
+            Wooow, there's too much wasted space here...
+        </mat-card-title>
+        <mat-card-subtitle>
+            Why don't you create something new?
+        </mat-card-subtitle>
+    </div>
+</div>

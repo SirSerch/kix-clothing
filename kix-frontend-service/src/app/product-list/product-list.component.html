@@ -1,0 +1,62 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <mat-icon>store</mat-icon><span>Products</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+        <button mat-flat-button color="accent" [routerLink]="'new'">
+            New Product <mat-icon>add</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.productId.substring(0,8)}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.productName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.productTags.category }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.productPrice | number}} €</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Image</mat-header-cell>
+        <mat-cell *matCellDef="let product"><img height="40px"
+                src="{{product.productImages.images[0]}}"></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let product; let tableIndex = index">
+            <button mat-icon-button *ngIf="! product.indexed" matTooltip="Product NOT Indexed">
+                <mat-icon (click)="indexProduct(product, tableIndex)">search_off</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="product.indexed" matTooltip="Product Indexed">
+                <mat-icon (click)="indexProduct(product, tableIndex)">search</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="View Product" [routerLink]="[product.productId]">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete Product" (click)="deleteProduct(product, tableIndex)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<app-loading-component [isLoading]="isLoading" [isErrorLoading]="isErrorLoading" [isEmpty]="isEmpty">
+</app-loading-component>

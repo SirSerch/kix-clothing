@@ -1,0 +1,41 @@
+<mat-dialog-content>
+    <h2 mat-dialog-title>Search</h2>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">image_search</mat-icon>
+                Image Search
+            </ng-template>
+            <mat-card *ngIf="(!searching) && (!searchingError)">
+                <mat-card-header id="drop_zone" (drop)="handleDrop($event)" (dragover)="handleDragOver($event)" (click)="openImage()">
+                    <mat-card-title>Search by image</mat-card-title>
+                    <mat-card-subtitle>Drag and drop or click to select an image!</mat-card-subtitle>
+                    <mat-icon>image</mat-icon>
+                </mat-card-header>
+            </mat-card>
+
+            <div class="loading" *ngIf="searching && !searchingError">
+                <h3 class="loading-title">SEARCHING</h3>
+                <p>Powered by Google Cloud Vision</p>
+                <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+            </div>
+            <div class="error loading" *ngIf="!searching && searchingError">
+                <h2 class="emoji">😣</h2>
+                <h3 class="loading-title">ERROR</h3>
+                <p>An ERROR occurred while trying to search for the products, please try again later {{'-' + errorCode}}</p>
+                <mat-progress-bar mode="determinate" value="100" color="accent"></mat-progress-bar>
+            </div>
+        </mat-tab>
+        <mat-tab *ngIf="false">
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">search</mat-icon>
+                Basic Search
+            </ng-template>
+            <mat-form-field color="accent" class="basic-search">
+                <mat-label>What are you searching for?</mat-label>
+                <input matInput type="search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </mat-tab>
+    </mat-tab-group>
+</mat-dialog-content>

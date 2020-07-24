@@ -1,0 +1,18 @@
+<mat-tab-group color="accent">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">login</mat-icon>
+            Login
+        </ng-template>
+        <app-login-signin (signin)="_signin($event)">
+        </app-login-signin>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">create</mat-icon>
+            Sign Up
+        </ng-template>
+        <app-login-signup (signup)="_signup($event)"></app-login-signup>
+    </mat-tab>
+</mat-tab-group>

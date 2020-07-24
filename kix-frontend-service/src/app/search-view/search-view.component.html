@@ -1,0 +1,28 @@
+<mat-toolbar>
+    <h1><button mat-icon-button [routerLink]="['']"><mat-icon>keyboard_arrow_left</mat-icon></button> <mat-icon>search</mat-icon> Search results</h1>
+</mat-toolbar>
+<div *ngIf="bestResults.length > 0">
+    <mat-toolbar>
+        <h2>Best results</h2>
+    </mat-toolbar>
+    <div class="releated-results" class="products-container">
+        <app-product-card *ngFor="let bestProduct of bestResults" [product]="bestProduct" (favorite)="favorite($event)">
+        </app-product-card>
+    </div>
+</div>
+
+<div class="search-not-found" *ngIf="bestResults.length === 0">
+    <h1 class="emoji">😟</h1>
+    <h2>Sorry, but we have not been able to find that article that you wanted so much ...</h2>
+    <h3 *ngIf="releatedResult.length > 0" >The good news is that here are other similar items that you might like.</h3>
+</div>
+
+<div *ngIf="releatedResult.length > 0">
+    <mat-toolbar>
+        <h2>Releated articles</h2>
+    </mat-toolbar>
+    <div class="releated-results" class="products-container">
+        <app-product-card *ngFor="let releatedProduct of releatedResult" [product]="releatedProduct"
+            (favorite)="favorite($event)"></app-product-card>
+    </div>
+</div>

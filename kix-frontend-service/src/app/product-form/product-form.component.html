@@ -1,0 +1,67 @@
+<mat-toolbar>
+    <mat-toolbar-row>    
+        <button mat-flat-button color="primary" (click)="sendProduct()"
+        [disabled]="_product.invalid || images.length == 0">
+        SAVE PRODUCT <mat-icon>save</mat-icon>
+    </button></mat-toolbar-row>
+</mat-toolbar>
+<form [formGroup]="_product">
+    <div class="product-information">
+        <mat-form-field appearance="fill">
+            <mat-label>Product name</mat-label>
+            <input type="text" matInput placeholder="Gathered strappy mini dress" formControlName="productName">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Product description</mat-label>
+            <textarea cols="40" rows="10" matInput
+                placeholder="Strappy mini dress with gathered detail on the chest. Made of viscose."
+                formControlName="productDescription"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Product price</mat-label>
+            <input matInput type="number" formControlName="productPrice">
+            <span matSuffix>€</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Product Category</mat-label>
+            <mat-select formControlName="productCategory">
+                <mat-option *ngFor="let category of categories" [value]="category.value">{{category.category}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Product Color</mat-label>
+            <mat-select formControlName="productColor">
+                <mat-option *ngFor="let color of colors.sort()" [value]="color.value">{{color.color}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="product-images">
+        <div class="list" cdkDropList (cdkDropListDropped)="orderImage($event)">
+            <h1 class="list-title">Product Images</h1>
+            <div class="list-item" *ngFor="let image of images; let i=index" cdkDrag>
+                <img class="list-preview" src="data:image/jpeg;base64,{{image.image}}">
+                <div class="list-details">
+                    <h1 class="list-title">{{image.name}}</h1>
+                    <h2 class="list-subtitle">{{(image.size / (1024*1024)).toFixed(2)}} MB</h2>
+                </div>
+                <span class="spacer"></span>
+                <div class="list-action-buttons">
+                    <button mat-icon-button color="primary" (click)="deleteImage(i)">
+                        <mat-icon (click)="deleteImage(i)">delete</mat-icon>
+                    </button>
+                    <button mat-icon-button cdkDragHandle>
+                        <mat-icon>reorder</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button mat-flat-button color="primary" (click)="insertImage()">
+            INSERT IMAGE <mat-icon>add_photo_alternate</mat-icon>
+        </button>
+        <br>
+        <input id="insert-image" type="file" hidden multiple accept="image/jpeg">
+    </div>
+</form>

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title><mat-icon>favorite</mat-icon> Save Wish-List</h2>
+<form [formGroup]="saveForm">
+<h3>Give it a name!</h3>
+<mat-form-field appearance="fill">
+    <mat-label>Wish list name</mat-label>
+    <input matInput formControlName="name" placeholder="Lucia's Birthday, Christmas presents,...">
+</mat-form-field>
+<div *ngIf="wishLists.length > 0">
+    <h3>...Or select a previus Wish List</h3>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose a wish-list</mat-label>
+        <mat-select formControlName="id">
+            <mat-option [value]=wishList.id *ngFor="let wishList of wishLists" >{{wishList.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+</form>
+<div class="loading" *ngIf="saving && !errorSaving">
+    <h3 class="loading-title">SAVING</h3>
+    <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+</div>
+<div class="error loading" *ngIf="!saving && errorSaving">
+    <h3 class="loading-title">ERROR</h3>
+    <p>An Error was occured while trying to save the wish-list. Please, later</p>
+    <mat-progress-bar mode="determinate" value="100" color="accent"></mat-progress-bar>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="accent" (click)="saveWishList()" [disabled]="isInvalid">Save it! <mat-icon>save</mat-icon></button>
+    <button mat-button color="basic" [mat-dialog-close] cdkFocusInitial>Cancel</button>
+</div>

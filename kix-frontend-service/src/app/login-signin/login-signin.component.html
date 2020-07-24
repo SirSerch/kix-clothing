@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="_signin">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput placeholder="lord@voldemorth.com" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <mat-card-actions>
+            <button mat-flat-button color="accent" (click)="letsSignin()">Sign In</button>
+            <button mat-flat-button color="primary">Sign Up</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

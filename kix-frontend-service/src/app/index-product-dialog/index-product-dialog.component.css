@@ -1,0 +1,18 @@
+.loading {
+    padding: 10px;
+    text-align: center;
+    
+}
+
+.loading .loading-title {
+    letter-spacing: 2px !important;
+    font-weight: 600;
+}
+
+.error .loading-title{
+    margin-bottom: 0px;
+}
+
+.error p {
+    text-align: justify;
+}

@@ -1,0 +1,19 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <mat-icon>favorite</mat-icon><h1> View wish list: {{wish.name}}</h1>
+        <span class="spacer"></span>
+        <button mat-flat-button color="accent" (click)="updateWishList()">
+            <mat-icon>save</mat-icon> Update Wish List
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row></mat-toolbar-row>
+</mat-toolbar>
+<div class="wish-container">
+    <app-product-card 
+    *ngFor="let product of products; index as i" 
+    [product]=product
+    (favorite)="favorite($event, i)"
+    ></app-product-card>
+</div>
+
+<app-loading-util [loading]="isLoading" [error]="isErrorLoading"></app-loading-util>

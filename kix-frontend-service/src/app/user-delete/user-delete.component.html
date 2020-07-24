@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Do you want to delete {{user.name}} {{user.lastName}}?</h2>
+<h3>This action cannot be undone, be careful</h3>
+<p>Deleting a user deletes its information, whish-lists, carts...</p>
+<div class="loading" *ngIf="deleting && !errorDeleting">
+    <h3 class="loading-title">DELETING</h3>
+    <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+</div>
+<div class="error loading" *ngIf="!deleting && errorDeleting">
+    <h3 class="loading-title">ERROR</h3>
+    <p>An Error was occured while trying to delete the user. Please, try to delete the user later</p>
+    <mat-progress-bar mode="determinate" value="100" color="accent"></mat-progress-bar>
+</div>
+<div mat-dialog-actions>
+    <button mat-button color="accent" (click)="deleteUser()">Yes, delete it!</button>
+    <button mat-button color="basic" [mat-dialog-close] cdkFocusInitial>Cancel</button>
+</div>

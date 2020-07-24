@@ -1,0 +1,55 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <mat-icon>supervisor_account</mat-icon><span>Users</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+        <button mat-flat-button color="accent" [routerLink]="'new'">
+            New User <mat-icon>add</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.lastName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.role }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let user; let tableIndex = index">
+            <button mat-icon-button matTooltip="View User" [routerLink]="[user.id]">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete User" (click)="deleteUser(user, tableIndex)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<app-loading-component [isLoading]="isLoading" [isErrorLoading]="isErrorLoading" [isEmpty]="isEmpty">
+</app-loading-component>

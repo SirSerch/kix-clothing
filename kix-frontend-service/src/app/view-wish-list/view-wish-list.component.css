@@ -1,0 +1,35 @@
+.mat-list-item {
+    height: 110px !important;
+}
+
+.mat-list-icon {
+    height: 90px !important;
+    width: initial !important;
+    border-radius: initial !important;
+}
+
+p.mat-list-footer{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+p.mat-list-noitem {
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+}
+
+p.mat-list-noitem mat-icon {
+    color: #ccc;
+    height: initial;
+    width: initial;
+    font-size: 50px;
+    margin-bottom: 12px;
+}
+
+p.mat-list-noitem span{
+    font-size: 15px;
+}
+

@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+<form [formGroup]="_signup">
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput placeholder="Lord Voldemorth" formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput placeholder="Lord Voldemorth" formControlName="lastName">
+    </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Lord Voldemorth" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <button mat-flat-button color="accent" (click)="letsSignup()">Sign Up</button>
+</form>
+</mat-card>

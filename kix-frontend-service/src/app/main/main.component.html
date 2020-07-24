@@ -1,0 +1,16 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+    <app-header [navbar]="snav"></app-header>
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav opened="true" #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+            fixedTopGap="56">
+            <mat-nav-list>
+                <a class="a-link" mat-list-item [routerLink]="nav.route" *ngFor="let nav of fillerNav">
+                    {{ nav.name }}
+                </a>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

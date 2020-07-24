@@ -3,6 +3,8 @@
 ![Google Cloud](doc-images/highlights/Untitled.png)
 
 > Kix Clothing is born as a clear idea, a platform where users can easily access their favorite clothes and easily search using images to find those clothes that they may like or that are similar to those they already have.
+> 
+> Sergio de Los Santos
 
 ![Web](doc-images/highlights/Untitled%201.png)
 
@@ -43,6 +45,8 @@ In total, 5 microservices have been implemented for this project.
 
 # How to use this application
 
+## Configure Google Service
+
 To use this application you need a passport.json file provided by Google with the keys needed to access the service, these keys are included in the search engine microservice in the root folder, you just have to create an environment variable called GOOGLE_APPLICATION_CREDENTIALS
 
 ```java
@@ -52,7 +56,15 @@ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/passport.json"
 This application requires pre-loaded data, since the google learning model has them learned so it is very likely that the application will fail if the data is not entered correctly from the beginning.
 In the corresponding microservices, there is a file **data.sql** or **data.json** that you should use to preload this data in your local computer
 
-# Postman API
+## Credentials
+You can use this credentials in order to use the web application
+
+| User | Password | Role
+| ------------- | ------------- |--------|
+| admin@admin.com  | admin  | admin
+| sergio@santos.com  | sergio  | client
+
+## Postman API
 https://documenter.getpostman.com/view/11779377/T1DpDdbb
 
 

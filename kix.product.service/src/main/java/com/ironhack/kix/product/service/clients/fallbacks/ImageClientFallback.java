@@ -1,3 +1,4 @@
+/*
 package com.ironhack.kix.product.service.clients.fallbacks;
 
 import com.ironhack.kix.product.service.clients.ImageClient;
@@ -43,3 +44,4 @@ public class ImageClientFallback implements ImageClient {
     }
 }
 
+*/

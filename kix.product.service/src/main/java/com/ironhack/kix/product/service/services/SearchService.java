@@ -20,6 +20,13 @@ public class SearchService {
 
     final static Logger LOGGER = LoggerFactory.getLogger(SearchService.class);
 
+    /**
+     * Product search using an image in base64 format, you can pass a filter to further
+     * narrow the search (pending implementation)
+     * @param imageBase64
+     * @param mapFilter (pending implementation)
+     * @return
+     */
     List<ImageSearchResult> searchByImage(String imageBase64, Map<String, String> mapFilter){
         LOGGER.info("Search by Image: " + imageBase64.substring(0, 30).concat("..."));
         LOGGER.info(mapFilter.toString().replaceAll("[{}]", ""));

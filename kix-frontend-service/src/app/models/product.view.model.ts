@@ -10,7 +10,7 @@ export class ProductView {
     createdTime: Date;
     lastUpdateTime: Date;
     lastIndexedTime: Date;
-    isFavorite: boolean;
+    isFavorite: boolean = false;
     score: number;
 }
 

@@ -1,3 +1,4 @@
+/*
 package com.ironhack.kix.product.service.clients.fallbacks;
 
 import com.ironhack.kix.product.service.clients.SearchClient;
@@ -32,3 +33,4 @@ public class SearchClientFallback implements SearchClient {
 
     }
 }
+*/

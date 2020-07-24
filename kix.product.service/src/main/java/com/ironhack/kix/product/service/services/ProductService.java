@@ -31,6 +31,12 @@ public class ProductService implements ProductApi {
     @Autowired SearchClient searchClient;
     @Autowired SearchService searchService;
 
+
+    /**
+     * Creates a product using a DTO to pass the data
+     * @param productDTO
+     * @return
+     */
     @Override
     @Transactional
     public ProductView createProduct(ProductDTO productDTO) {
@@ -39,6 +45,10 @@ public class ProductService implements ProductApi {
         return new ProductView(productRepository.save(new Product(productDTO, galleryView.getGalleryId())), galleryView);
     }
 
+    /**
+     * Retrieve all products in the Mongo Database DB
+     * @return
+     */
     @Override
     public List<ProductView> getAllProducts() {
         LOGGER.info("Getting all products");
@@ -50,6 +60,11 @@ public class ProductService implements ProductApi {
         return productViews;
     }
 
+    /**
+     * Get a ProductView using by Id
+     * @param productId
+     * @return
+     */
     @Override
     public ProductView getProductById(String productId) {
         LOGGER.info("Get product by id: " + productId);
@@ -58,12 +73,22 @@ public class ProductService implements ProductApi {
         return new ProductView(product, galleryView);
     }
 
+    /**
+     * Get a product
+     * @param result
+     * @return
+     */
     public ProductView getProductById(ImageSearchResult result){
         ProductView product = this.getProductById(result.getProductId());
         product.setScore(result.getScore());
         return product;
     }
 
+    /**
+     * Update a product using a ProductDTO and ID
+     * @param updateProduct ProductDTO
+     * @param productId
+     */
     @Override
     public void updateProduct(ProductDTO updateProduct, String productId) {
         Product product = this.getProductByProductId(productId);
@@ -76,6 +101,12 @@ public class ProductService implements ProductApi {
         productRepository.save(newProduct);
     }
 
+    /**
+     * Index a product in the Search Engine. It takes as a parameter the id of the product and looks for the images
+     * associated with it to pass them to the feign client
+     * @param productId
+     * @return
+     */
     @Override
     public ProductView indexProduct(String productId) {
         LOGGER.info("Index product");
@@ -90,6 +121,12 @@ public class ProductService implements ProductApi {
         return new ProductView(productRepository.save(product), gallery);
     }
 
+    /**
+     * It removes the index of the product but not its images, when we modify the images or the information
+     * of some product we have to re-index.
+     * @param productId
+     * @return
+     */
     @Override
     public ProductView deleteIndexProduct(String productId) {
         Product product = this.getProductByProductId(productId);
@@ -101,6 +138,10 @@ public class ProductService implements ProductApi {
         return new ProductView(productRepository.save(product), gallery);
     }
 
+    /**
+     * Delete a whole product, first delete its index from the server, its images and finally the product itself
+     * @param productId
+     */
     @Override
     @Transactional
     public void deleteProduct(String productId) {
@@ -110,6 +151,12 @@ public class ProductService implements ProductApi {
         productRepository.deleteById(productId);
     }
 
+    /**
+     * Search for a product, it can be either a product search by keywords (to be implemented)
+     * or by image using the Google Vision image search system
+     * @param searchDTO
+     * @return
+     */
     public List<ProductView> searchProduct(SearchDTO searchDTO){
         Map<String, String> filter;
         if(searchDTO.getFilter() != null){
@@ -124,33 +171,14 @@ public class ProductService implements ProductApi {
         return null;
     }
 
+
+    /**
+     * Private method that manages the search of products by ID and returns an exception in case it is not found
+     * @param productId
+     * @return
+     */
     private Product getProductByProductId(String productId) {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
-
-    /**
-     * @Override public void updateProduct(ProductDTO updateProduct, String productId) {
-     * Product oldProduct = this.getProductById(productId);
-     * if (updateProduct.getProductName() != null && !updateProduct.getProductName().isEmpty())
-     * oldProduct.setProductName(updateProduct.getProductName());
-     * <p>
-     * if (updateProduct.getProductDescription() != null && !updateProduct.getProductDescription().isEmpty())
-     * oldProduct.setProductDescription(updateProduct.getProductDescription());
-     * <p>
-     * if(updateProduct.getProductPrice() != null)
-     * oldProduct.setProductPrice(updateProduct.getProductPrice());
-     * <p>
-     * if (updateProduct.getProductImages() != null && !updateProduct.getProductImages().isEmpty()) {
-     * //Do stuff with photos;
-     * }
-     * <p>
-     * if (updateProduct.getProductTags() != null && !updateProduct.getProductTags().isEmpty()) {
-     * //Do stuff with tags
-     * oldProduct.setProductTags(updateProduct.getProductTags());
-     * }
-     * <p>
-     * productRepository.save(oldProduct);
-     * }
-     **/
 }

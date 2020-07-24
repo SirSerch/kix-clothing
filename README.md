@@ -22,14 +22,14 @@ The api consists of two parts that must be put together, the **Vision Cloud API*
 
 # Technologies
 
-A lo largo del proyecto se han utilizado varias tecnologías de entre las cuales me gustaría destacar:
+Several technologies have been used throughout the project, among which I would like to highlight:
 
-- Java Spring Boot para la parte de Back-End
-- Netflix OSS Feign and Eureka para la conexión de los microservicios.
-- Cloud Vision API de Google como motor de búsqueda
-- Google Storage para el almacenamiento de imágenes datos
-- MongoDB para el almacenamiento de los productos
-- Angular y TypeScript para la parte del Front-End
+- Java Spring Boot for the Back-End
+- Netflix OSS Feign and Eureka for the connection of microservices.
+- Google Cloud Vision API as a search engine
+- Google Storage for image data storage
+- MongoDB for product storage
+- Angular and TypeScript for the Front-End part
 
 ## Microservices
 

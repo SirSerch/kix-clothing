@@ -1,6 +1,5 @@
 package com.ironhack.kix.product.service.clients;
 
-import com.ironhack.kix.product.service.clients.fallbacks.ImageClientFallback;
 import com.ironhack.kix.product.service.models.dto.GalleryDTO;
 import com.ironhack.kix.product.service.models.dto.GalleryView;
 import org.springframework.cloud.openfeign.FeignClient;

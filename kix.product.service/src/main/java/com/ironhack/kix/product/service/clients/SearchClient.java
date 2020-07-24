@@ -1,6 +1,5 @@
 package com.ironhack.kix.product.service.clients;
 
-import com.ironhack.kix.product.service.clients.fallbacks.SearchClientFallback;
 import com.ironhack.kix.product.service.models.dto.ImageSearchResult;
 import com.ironhack.kix.product.service.models.dto.IndexView;
 import com.ironhack.kix.product.service.models.dto.ProductView;

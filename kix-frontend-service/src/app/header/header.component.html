@@ -4,23 +4,35 @@
     </button>
     <h1 class="logo" [routerLink]="([''])">KIX CLOTHING</h1>
     <span class="spacer"></span>
-    <button mat-icon-button color="basic" *ngIf="router.url.match('/dashboard.*')" (click)="router.navigate([''])">
+    <button mat-icon-button color="basic" *ngIf="router.url.match('/dashboard.*')" [matMenuTriggerFor]="logoutAction">
         <mat-icon>exit_to_app</mat-icon>
     </button>
+    <mat-menu #logoutAction="matMenu">
+        <button mat-menu-item (click)="logout()"><mat-icon>https</mat-icon> Log out! </button>
+      </mat-menu>
     <div class="navigate-buttons" *ngIf="router.url.match('/.*') && ! router.url.match('/dashboard.*')">
         <button mat-icon-button (click)="search()">
             <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button color="basic" [routerLink]="['dashboard']">
-            <mat-icon *ngIf="false">person</mat-icon>
-            <mat-icon>person_outline</mat-icon>
+        <button mat-icon-button color="basic">
+            <mat-icon *ngIf="isAuth" [routerLink]="(['dashboard'])">person</mat-icon>
+            <mat-icon *ngIf="!isAuth" [matMenuTriggerFor]="login">person_outline</mat-icon>
         </button>
         <button mat-icon-button color="basic" [matMenuTriggerFor]="wishList">
             <mat-icon matBadge="{{favoriteService.favorites}}" matBadgeColor="accent" matBadgeSize="small" *ngIf="hasFavorite">favorite</mat-icon>
             <mat-icon *ngIf="! hasFavorite">favorite_outline</mat-icon>
         </button>
-        <mat-menu #wishList="matMenu" style="max-width: none !important;">
+        <mat-menu #wishList="matMenu" class="mat-menu-header">
             <app-view-wish-list></app-view-wish-list>
+        </mat-menu>
+        <mat-menu #login="matMenu" class="mat-menu-header">
+            <app-login-form 
+            (click)="$event.stopPropagation();$event.preventDefault();"
+            (keydown.tab)="$event.stopPropagation()"
+            (signin)="isAuth=$event" (signup)="isAuth=$event"></app-login-form>
         </mat-menu>
     </div>
 </mat-toolbar>
+
+
+        

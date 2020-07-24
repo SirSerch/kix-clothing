@@ -17,9 +17,8 @@ mat-toolbar {
     margin: 0 20px;
 }
 
-/*
-APPLY IN STYLE.CSS
-.mat-menu-panel {
-    max-width: none !important;
+::ng-deep .mat-menu-header {
+    max-width: 400px !important;
+    min-width: 300px !important;
 }
-*/
+

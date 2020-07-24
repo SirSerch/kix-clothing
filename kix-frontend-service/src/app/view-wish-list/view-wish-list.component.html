@@ -11,8 +11,8 @@
         </mat-action-list>
     </mat-list-item>
     <p class="mat-list-footer" *ngIf="wishList.length > 0">
-        <button mat-fab color="accent">
-            <mat-icon>save</mat-icon>
+        <button mat-fab color="accent" *ngIf="auth">
+            <mat-icon (click)="saveWishList()">save</mat-icon>
         </button>
         <button mat-fab color="primary" (click)="deleteWishList()">
             <mat-icon>delete_forever</mat-icon>

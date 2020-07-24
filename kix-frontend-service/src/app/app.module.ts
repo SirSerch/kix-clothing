@@ -53,6 +53,12 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserViewComponent } from './user-view/user-view.component';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { LoginSigninComponent } from './login-signin/login-signin.component';
+import { LoginSignupComponent } from './login-signup/login-signup.component';
+import { WishlistListComponent } from './wishlist-list/wishlist-list.component';
+import { WishlistSaveComponent } from './wishlist-save/wishlist-save.component';
+import { WishlistViewComponent } from './wishlist-view/wishlist-view.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +85,13 @@ import { UserDeleteComponent } from './user-delete/user-delete.component';
     UserListComponent,
     UserCreateComponent,
     UserViewComponent,
-    UserDeleteComponent
+    UserDeleteComponent,
+    LoginFormComponent,
+    LoginSigninComponent,
+    LoginSignupComponent,
+    WishlistListComponent,
+    WishlistSaveComponent,
+    WishlistViewComponent
   ],
   imports: [
     BrowserModule,

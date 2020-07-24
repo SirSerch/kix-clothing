@@ -46,6 +46,7 @@ public class UserService implements UserApi {
     @Override
     public void updateUser(UserDTO userDTO, Long id) {
         User user = this.getUserById(id);
+        user.setRole(userDTO.getRole());
         user.setName(userDTO.getName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());

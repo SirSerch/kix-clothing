@@ -59,6 +59,11 @@ export class StorageService {
     return [];
   }
 
+  deleteAllFavorites(): void {
+    this.removeItem('favorites');
+    this.storageSub.next();
+  }
+
   setProducts(products: ProductView[]): ProductView[]{
     const favorites: ProductView[] = this.obtainFavorites();
     favorites.forEach(favorite => {

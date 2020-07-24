@@ -12,12 +12,10 @@ public class CorsConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowedOrigins(
-                                "https://poddo.herokuapp.com",
-                                "http://localhost:4200"
-                        )
+                        .allowedOrigins("*")
+                        .maxAge(3600)
                         .allowCredentials(true)
                 ;
             }

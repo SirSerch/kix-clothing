@@ -20,6 +20,18 @@ public class UserView {
     public UserView() {
     }
 
+    public UserView(UserView user) {
+        this.id = user.getId();
+        this.role = user.getRole();
+        this.name = user.getName();
+        this.lastName = user.getLastName();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.address = user.getAddress();
+        this.cart = user.getCart();
+        this.payments = user.getPayments();
+    }
+
     public Role getRole() {
         return role;
     }
@@ -90,5 +102,20 @@ public class UserView {
 
     public void setPayments(List<Long> payments) {
         this.payments = payments;
+    }
+
+    @Override
+    public String toString() {
+        return "UserView{" +
+                "id=" + id +
+                ", role=" + role +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                ", cart=" + cart +
+                ", payments=" + payments +
+                '}';
     }
 }

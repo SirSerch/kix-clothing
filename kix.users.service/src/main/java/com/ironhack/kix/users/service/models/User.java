@@ -24,6 +24,8 @@ public class User {
     private List<Long> payments;
     @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+    private List<WishList> wishLists;
 
     public User() {
     }
@@ -38,6 +40,8 @@ public class User {
         this.cart = userDTO.getCart();
         this.payments = userDTO.getPayments();
     }
+
+
 
     public Address getAddress() {
         return address;

@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProductView } from '../models';
 import { StorageService } from '../storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { WishlistSaveComponent } from '../wishlist-save/wishlist-save.component';
+import { AuthUtil } from '../utils';
 
 @Component({
   selector: 'app-view-wish-list',
@@ -11,11 +14,14 @@ export class ViewWishListComponent implements OnInit {
 
   @Output()
   propagar = new EventEmitter<ProductView>();
-  
+
   wishList: ProductView[];
 
+  auth = AuthUtil.isAuth();
+
   constructor(
-    private storage: StorageService
+    private storage: StorageService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +41,13 @@ export class ViewWishListComponent implements OnInit {
 
   deleteWishList(){
     this.storage.obtainFavorites().forEach(favorite => this.deleteProduct(favorite));
+  }
+
+  saveWishList(){
+    const dialogRef = this.dialog.open(WishlistSaveComponent, {
+      width: '400px',
+      data: this.wishList
+    });
   }
 
 }

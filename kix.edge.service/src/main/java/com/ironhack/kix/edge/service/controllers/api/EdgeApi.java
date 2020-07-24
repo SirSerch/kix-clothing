@@ -25,4 +25,6 @@ public interface EdgeApi {
     ProductView indexProductOnSearchEngine(String productId);
     ProductView deleteIndexFromSearchEngine(String productId);
     void updateUser(@RequestBody UserDTO user, Long userId);
+
+
 }

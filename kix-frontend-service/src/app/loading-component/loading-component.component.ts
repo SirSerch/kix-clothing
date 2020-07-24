@@ -15,6 +15,13 @@ export class LoadingComponentComponent implements OnInit {
 
   @Input()
   isEmpty?: boolean = false;
+
+  @Input()
+  title?: string = `Wooow, there's too much wasted space here...`;
+
+  @Input()
+  subtitle?: string = `Why don't you create something new?`;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -13,6 +13,10 @@ import { ProductCreateComponent } from './product-create/product-create.componen
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductShowcaseComponent } from './product-showcase/product-showcase.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { ViewWishListComponent } from './view-wish-list/view-wish-list.component';
+import { WishlistListComponent } from './wishlist-list/wishlist-list.component';
+import { WishlistViewComponent } from './wishlist-view/wishlist-view.component';
 
 
 const routes: Routes = [
@@ -25,13 +29,17 @@ const routes: Routes = [
         component: ViewProductsComponent
       },
       {
+        path: 'login',
+        component: LoginFormComponent
+      },
+      {
         path: 'products/search',
         component: SearchViewComponent
       },
       {
         path: 'products/:id',
         component: ProductShowcaseComponent
-      }
+      },
     ]
   },
   {
@@ -67,6 +75,14 @@ const routes: Routes = [
         path: 'users/:id',
         component: UserViewComponent
       },
+      {
+        path: 'wishlists',
+        component: WishlistListComponent
+      },
+      {
+        path: 'wishlists/:id',
+        component: WishlistViewComponent
+      }
     ]
   },
   {

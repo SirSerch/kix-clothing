@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
@@ -6,6 +6,7 @@ import { StorageService } from '../storage.service';
 import { verifyHostBindings } from '@angular/compiler';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchComponent } from '../search/search.component';
+import { AuthUtil } from '../utils';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
 
   searchData: Search;
 
+  isAuth: boolean;
 
   constructor(
       router: Router,
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit {
     this.favoriteService.watchStorage().subscribe((data: string) => {
       this.favoriteService.favorites > 0 ? this.hasFavorite = true : this.hasFavorite = false;
     });
+    this.isAuth = AuthUtil.isAuth(); 
   }
 
   logOut(): void {
@@ -63,6 +66,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigateByUrl('/products/search', {state: searchResult});
       }
     });
+  }
+
+  logout(): void{
+    this.isAuth = AuthUtil.logOut();
+    console.log(this.isAuth);
+    this.router.navigate(['']);
   }
 
 }

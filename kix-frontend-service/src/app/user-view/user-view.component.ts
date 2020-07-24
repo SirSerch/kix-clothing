@@ -53,6 +53,7 @@ export class UserViewComponent implements OnInit {
   updateUser(user: User): void{
     this.loadingTitle = 'Updating user';
     this.errorLoading = !(this.loading = true);
+    console.log(user);
     this.http.put(EdgeURL.concat(`/users/${this.userId}`), user).subscribe(success => {
       this.snackBar.openPanel(`User with id: ${this.userId} UPDATED correctly!`, 'SUCCESS');
       this.router.navigateByUrl('/dashboard/users');

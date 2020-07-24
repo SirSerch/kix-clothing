@@ -9,6 +9,7 @@ import com.ironhack.kix.edge.service.models.views.UserView;
 import com.ironhack.kix.edge.service.services.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,14 @@ import java.util.List;
 public class EdgeController implements EdgeApi {
 
     @Autowired private EdgeService edgeService;
+
+    //Is User Valid
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/login")
+    public UserView login(@AuthenticationPrincipal UserView userView){
+        return userView;
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST, value = "/user")

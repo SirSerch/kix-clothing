@@ -57,7 +57,7 @@ export class UserFormComponent implements OnInit {
           role: user.role,
           name: user.name,
           lastName: user.lastName,
-          password: user.password,
+          password: '',
           email: user.email,
           address: user.address
         });

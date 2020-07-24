@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(value = "kix-search-service", fallback = SearchClientFallback.class)
+@FeignClient(value = "kix-search-service")
 public interface SearchClient {
 
     @ResponseStatus(HttpStatus.OK)

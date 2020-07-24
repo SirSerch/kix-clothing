@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@FeignClient(value = "kix-image-service", fallback = ImageClientFallback.class)
+@FeignClient(value = "kix-image-service")
 public interface ImageClient {
 
     @ResponseStatus(HttpStatus.OK)

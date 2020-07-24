@@ -44,4 +44,13 @@ public class ImageSearchResult {
     public void addTag(String key, String value){
         tags.put(key, value);
     }
+
+    @Override
+    public String toString() {
+        return "ImageSearchResult{" +
+                "productId='" + productId + '\'' +
+                ", score=" + score +
+                ", tags=" + tags +
+                '}';
+    }
 }

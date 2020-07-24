@@ -27,9 +27,6 @@ export class SearchViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.searchResult.length === 0) {
-      this.location.back();
-    }
     this.searchResult = this.storage.setProducts(this.searchResult);
     this.searchResult.sort((a, b) => b.score - a.score);
     this.bestResults = this.searchResult.filter(result => result.score > 0.5);

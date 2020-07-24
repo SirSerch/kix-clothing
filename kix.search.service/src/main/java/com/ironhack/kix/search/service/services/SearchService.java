@@ -26,7 +26,11 @@ public class SearchService implements SearchApi {
 
     @Override
     public List<ImageSearchResult> searchProductsByImage(String imageBase64, String filter) {
-        return googleService.searchProductByImage(imageBase64, filter);
+        LOGGER.info("Search Products By Image");
+        List<ImageSearchResult> results = googleService.searchProductByImage(imageBase64, filter);
+        LOGGER.info(results.toString());
+        LOGGER.info("Number of products found: " + results.size());
+        return results;
     }
 
     @Override

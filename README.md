@@ -53,6 +53,7 @@ This application requires pre-loaded data, since the google learning model has t
 In the corresponding microservices, there is a file **data.sql** or **data.json** that you should use to preload this data in your local computer
 
 # Postman API
+https://documenter.getpostman.com/view/11779377/T1DpDdbb
 
 
 # Future implementations

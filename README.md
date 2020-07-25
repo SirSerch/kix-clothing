@@ -44,8 +44,24 @@ In total, 5 microservices have been implemented for this project.
 - Edge Microservice: The director of this entire orchestra, handles all requests and make the page work properly. I would like to be able to implement Hystrix and Ribbon in the future to make it fault and crash-tolerant.
 
 # How to use this application
+Due to the difficulty I had with the passport.json file, I have made the deployment in Heroku so that the application can be checked and used
+## Using Deploy
+![Heroku Logo](https://joanmontesdoria.files.wordpress.com/2019/02/heroku.png)
+You can access to the app using this link the front-end application deployed in Heroku
+> https://kix-frontend.herokuapp.com/
 
-## Configure Google Service
+| Microservice | Url 
+| ------------- | ------------- 
+| Front End  | https://kix-frontend.herokuapp.com/
+| Edge Service  | https://kix-edge.herokuapp.com/
+| User Service  | https://kix-users.herokuapp.com/
+| Product Service  | https://kix-products.herokuapp.com/
+| Image Service  | https://kix-images.herokuapp.com/
+| Search Service  | https://kix-search.herokuapp.com/
+| Eureka Service  | https://kix-eureka-server.herokuapp.com/
+
+## Deploy in local
+### Configure Google Service
 
 To use this application you need a passport.json file provided by Google with the keys needed to access the service, ~~these keys are included in the search engine microservice in the root folder, you just have to create an environment variable called GOOGLE_APPLICATION_CREDENTIALS~~
 

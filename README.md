@@ -25,7 +25,7 @@ The api consists of two parts that must be put together, the **Vision Cloud API*
 # Future implementations
 
 In the future I would like to implement a payment system, a normal text search engine, categories on the web to be able to filter the products, etc..
-We have had little time, this week has been quite intense and I have not been able to perform all the features I had proposed, which I will implement over these weeks as it is a project that I liked very much to carry out
+We have had little time, this week has been quite intense and I have not been able to perform all the features I had proposed, which I will implement over these weeks as it is a project that I liked very much to do
 
 # Technologies
 

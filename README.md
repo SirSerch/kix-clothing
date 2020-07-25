@@ -48,6 +48,12 @@ Due to the difficulty I had with the passport.json file, I have made the deploym
 ## Using Deploy
 ![Heroku Logo](https://joanmontesdoria.files.wordpress.com/2019/02/heroku.png)
 You can access to the app using this link the front-end application deployed in Heroku
+
+> ### Important Note
+>
+> Due to the nature of Heroku's free account, some times the application may not work properly,
+> Please keep it in mind.
+
 > https://kix-frontend.herokuapp.com/
 
 | Microservice | Url 

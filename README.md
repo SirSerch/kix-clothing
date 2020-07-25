@@ -49,7 +49,7 @@ In total, 5 microservices have been implemented for this project.
 
 To use this application you need a passport.json file provided by Google with the keys needed to access the service, ~~these keys are included in the search engine microservice in the root folder, you just have to create an environment variable called GOOGLE_APPLICATION_CREDENTIALS~~
 
-**For security reasons, I've had to delete the passport.json, if you need to let me know**
+**For security reasons, I've had to delete the passport.json, if you need it, let me know**
 
 ```java
 export GOOGLE_APPLICATION_CREDENTIALS="/path/to/passport.json"

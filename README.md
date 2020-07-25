@@ -22,6 +22,11 @@ The api consists of two parts that must be put together, the **Vision Cloud API*
 ![Image Search](doc-images/highlights/image-search.gif)
 ![Favorites](doc-images/highlights/favorites.gif)
 
+# Future implementations
+
+In the future I would like to implement a payment system, a normal text search engine, categories on the web to be able to filter the products, etc..
+We have had little time, this week has been quite intense and I have not been able to perform all the features I had proposed, which I will implement over these weeks as it is a project that I liked very much to carry out
+
 # Technologies
 
 Several technologies have been used throughout the project, among which I would like to highlight:
@@ -66,6 +71,14 @@ You can access to the app using this link the front-end application deployed in 
 | Search Service  | https://kix-search.herokuapp.com/
 | Eureka Service  | https://kix-eureka-server.herokuapp.com/
 
+## Credentials
+You can use this credentials in order to use the web application
+
+| User | Password | Role
+| ------------- | ------------- |--------|
+| admin@admin.com  | admin  | admin
+| sergio@santos.com  | sergio  | client
+
 ## Deploy in local
 ### Configure Google Service
 
@@ -80,19 +93,5 @@ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/passport.json"
 This application requires pre-loaded data, since the google learning model has them learned so it is very likely that the application will fail if the data is not entered correctly from the beginning.
 In the corresponding microservices, there is a file **data.sql** or **data.json** that you should use to preload this data in your local computer
 
-## Credentials
-You can use this credentials in order to use the web application
-
-| User | Password | Role
-| ------------- | ------------- |--------|
-| admin@admin.com  | admin  | admin
-| sergio@santos.com  | sergio  | client
-
 ## Postman API
 https://documenter.getpostman.com/view/11779377/T1DpDdbb
-
-
-# Future implementations
-
-In the future I would like to implement a payment system, a normal text search engine, categories on the web to be able to filter the products, etc..
-We have had little time, this week has been quite intense and I have not been able to perform all the features I had proposed, which I will implement over these weeks as it is a project that I liked very much to carry out
